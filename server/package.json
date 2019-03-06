@@ -15,5 +15,9 @@
   "bugs": {
     "url": "https://github.com/CanonManF22/BankWebApp/issues"
   },
-  "homepage": "https://github.com/CanonManF22/BankWebApp#readme"
+  "homepage": "https://github.com/CanonManF22/BankWebApp#readme",
+  "dependencies": {
+    "is-empty": "^1.2.0",
+    "validator": "^10.11.0"
+  }
 }
