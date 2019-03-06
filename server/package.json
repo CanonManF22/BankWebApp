@@ -15,5 +15,13 @@
   "bugs": {
     "url": "https://github.com/CanonManF22/BankWebApp/issues"
   },
-  "homepage": "https://github.com/CanonManF22/BankWebApp#readme"
+  "homepage": "https://github.com/CanonManF22/BankWebApp#readme",
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "is-empty": "^1.2.0",
+    "jsonwebtoken": "^8.5.0",
+    "package": "^1.0.1",
+    "passport": "^0.4.0",
+    "validator": "^10.11.0"
+  }
 }
