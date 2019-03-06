@@ -1,6 +1,7 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 const passport = require("passport");
+const mysql = require('mysql');
 const app = express();
 
 const users = require("./users");
@@ -23,5 +24,5 @@ const test = require('./test.js');
 //app.use('/test', test);
 app.use("/users", users);
 
-const port = process.env.PORT || 5050; 
+const port = process.env.PORT || 8080; 
 app.listen(port, () => console.log(`Server up and running on port ${port} !`));
