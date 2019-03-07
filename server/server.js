@@ -20,8 +20,6 @@ app.get('/', function(req, res){
 });
 
 // Routes
-const test = require('./test.js');
-//app.use('/test', test);
 app.use("/users", users);
 
 const port = process.env.PORT || 8080; 
