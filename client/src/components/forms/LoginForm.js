@@ -31,7 +31,8 @@ class LoginForm extends React.Component {
     
     handleSubmit = async e => {
         e.preventDefault();
-        const response = await fetch('/users/login', {
+        const response = await fetch('http://localhost:8080/users/login', {
+			mode: 'cors',
             method: 'POST',
             headers: {
             'Content-Type': 'application/json',

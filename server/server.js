@@ -2,10 +2,15 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const passport = require("passport");
 const mysql = require('mysql');
+const cors = require('cors');
 const app = express();
 
 const users = require("./users");
 
+//enable CORS (Cross-Origin Resource Sharing)
+//may require 'npm install cors'
+cors({credentials: true, origin: true});
+app.use(cors());
 // Bodyparser middleware
 app.use(
   bodyParser.urlencoded({
