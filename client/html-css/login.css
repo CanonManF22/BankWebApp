@@ -1,0 +1,71 @@
+html {
+	background: linear-gradient(#4C83BD, #132239) no-repeat center fixed;
+	background-size: cover;
+}
+
+
+.online-bank {
+	color: #FFFFFF;
+	font-family: Larabiefont;
+	font-size: 50px;
+	line-height: 118px;
+	text-align: center;
+	text-shadow: 2px 4px rgba(0,0,0,0.5);
+}
+
+form {
+	text-align: center;
+}
+
+.form-container {
+	display: flex;
+	margin: 30px;
+	justify-content: center;
+}
+
+input {
+	width: 25%;
+	padding: 12px;
+	outline: none;
+	border: none;
+	font-size: 15px;
+}
+
+.icon {
+	width: 20px;
+	padding: 12px 25px;
+	background-color: #91B0D1;
+	color: white;
+	text-align: center;
+	font-size: 25px;
+}
+
+button[type=submit] {
+	width: 200px;
+	padding: 5px 24px;
+	background-color: #91B0D1;
+	font-family: Avenir;
+	font-size: 30px;
+	color: #FFFFFF;
+	box-shadow: 0 2px 4px 0 rgba(0,0,0,0.5);
+	cursor: pointer;
+	border: none;
+}
+
+button[type=submit]:hover {
+	background-color: #000000;
+	color: #FFFFFF;
+}
+
+.register {
+	text-align: center;
+	font-family: Avenir;
+	font-size: 15px;
+	color: #FFFFFF;
+	padding-top: 10px;
+}
+
+.register a {
+	text-decoration: underline;
+	color: #FFFFFF;
+}

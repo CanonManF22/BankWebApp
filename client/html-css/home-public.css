@@ -1,0 +1,49 @@
+html {
+	background: linear-gradient(#4C83BD, #132239) no-repeat center fixed;
+	background-size: cover;
+}
+
+.personal-info button {
+	font-size: 50px;
+	background-color: transparent;
+	border: none;
+}
+
+.online-bank {
+	color: #FFFFFF;
+	font-family: Larabiefont;
+	font-size: 50px;
+	line-height: 118px;
+	text-align: center;
+	text-shadow: 2px 4px rgba(0,0,0,0.5);
+}
+
+.navbar {
+	display: flex;
+	justify-content: center;
+}
+
+.navbar button {
+	margin: 10px;
+	height: 200px;
+	width: 200px;
+	box-shadow: 0 2px 10px 0 rgba(0,0,0,0.5);
+	cursor: pointer;
+	background-color: #91B0D1;
+	border: none;
+
+	text-align: center;
+	color: #FFFFFF;
+	font-family: Avenir;
+	font-size: 30px;
+}
+
+.navbar button:hover {
+	background-color: #000000;
+	color: #FFFFFF;
+}
+
+.icon {
+	font-size: 80px;
+}
+
