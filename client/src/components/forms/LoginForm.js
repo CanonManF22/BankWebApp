@@ -27,7 +27,8 @@ class LoginForm extends React.Component {
     onChange = e => 
         this.setState({ 
             data: {...this.state.data, [e.target.name]: e.target.value }
-        });
+        })
+    
     
     handleSubmit = async e => {
         e.preventDefault();

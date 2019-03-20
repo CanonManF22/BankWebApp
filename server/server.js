@@ -1,11 +1,10 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 const passport = require("passport");
-const mysql = require('mysql');
 const cors = require('cors');
-const app = express();
-
 const users = require("./users");
+
+var app = express();
 
 //enable CORS (Cross-Origin Resource Sharing)
 //may require 'npm install cors'
@@ -20,12 +19,14 @@ app.use(
 app.use(bodyParser.json());
 //TODO: ADD DB Config
 
-app.get('/', function(req, res){
-  res.send('hello world')
-});
-
 // Routes
 app.use("/users", users);
 
+//Renders if react isn't running
+app.get('/', function(req, res){
+  res.send('React Not Running')
+});
+
 const port = process.env.PORT || 8080; 
 app.listen(port, () => console.log(`Server up and running on port ${port} !`));
+
