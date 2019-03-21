@@ -49,9 +49,20 @@ router.post('/login', (req, res) => {
   console.log(email);
   console.log(password);
   // check if user exists in db
-  const sql = `SELECT * FROM user WHERE email=${email} AND password=${password}`;
-  // const sql = 'SELECT * FROM user';
+  // const sql = `SELECT * FROM Users WHERE email=${email} AND password=${password}`;
+  // /const sql = 'SELECT * FROM Users WHERE email='${email}' AND password='${password};
+  const works =
+    "SELECT * FROM Users WHERE email='test1@gmail.com' AND password=1234";
+  console.log(works);
+  const sql =
+    "SELECT * FROM Users WHERE email='test1@gmail.com' AND password=1234";
+  console.log(sql);
   const query = db.query(sql, (err, result) => {
+    // db.get().query(
+    //   'SELECT * FROM Users WHERE email = ? AND password = ?',
+    //   email,
+    //   password,
+    //   (err, result) => {
     if (err) throw err;
     console.log(result);
     res.send('Posts fetched...');
