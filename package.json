@@ -6,7 +6,8 @@
   "scripts": {
     "client-install": "npm install --prefix client",
     "start": "node server/server.js",
-    "lint": "eslint server",
+    "lint": "prettier --write '**/*' --single-quote && eslint .",
+    "lint-fix": "eslint . --fix",
     "server": "nodemon server/server.js",
     "client": "npm start --prefix client",
     "dev": "concurrently \"npm run server\" \"npm run client\""
@@ -40,14 +41,19 @@
     "extends": [
       "airbnb",
       "bliss"
-    ]
+    ],
+    "rules": {
+      "flowtype-errors/show-errors": "off"
+    }
   },
   "devDependencies": {
+    "babel-plugin-transform-class-properties": "^6.24.1",
     "eslint-config-react-app": "^3.0.8",
     "eslint-plugin-flowtype": "^3.4.2",
     "eslint-plugin-flowtype-errors": "^4.0.0",
     "eslint-plugin-import": "^2.16.0",
     "eslint-plugin-jsx-a11y": "^6.2.1",
-    "eslint-plugin-react": "^7.12.4"
+    "eslint-plugin-react": "^7.12.4",
+    "prettier": "^1.16.4"
   }
 }
