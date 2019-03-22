@@ -1,11 +1,11 @@
-import React from 'react';
-import { Form, Button } from 'semantic-ui-react';
+import React from "react";
+import { Form, Button } from "semantic-ui-react";
 
 class LoginForm extends React.Component {
   state = {
     data: {
-      email: '',
-      password: ''
+      username: "",
+      password: ""
     },
     loading: false,
     errors: {}
@@ -32,11 +32,11 @@ class LoginForm extends React.Component {
   handleSubmit = async e => {
     e.preventDefault();
     const { data } = this.state;
-    const response = await fetch('http://localhost:8080/users/login', {
-      mode: 'cors',
-      method: 'POST',
+    const response = await fetch("http://localhost:8080/users/login", {
+      mode: "cors",
+      method: "POST",
       headers: {
-        'Content-Type': 'application/json'
+        "Content-Type": "application/json"
       },
       body: JSON.stringify({ post: data })
     }).then(res => res.json());
@@ -48,31 +48,33 @@ class LoginForm extends React.Component {
     return (
       <Form onSubmit={this.handleSubmit}>
         <Form.Field>
-          <label htmlFor="email">Email</label>
           <input
-            type="email"
-            id="email"
-            name="email"
-            placeholder="example@example.com"
-            value={data.email}
+            type="text"
+            id="username"
+            name="username"
+            placeholder="Username"
+            value={data.username}
             onChange={this.onChange}
           />
         </Form.Field>
         <Form.Field>
-          <label htmlFor="password">Password</label>
           <input
             type="password"
             id="pasword"
             name="password"
-            placeholder="Make it secure"
+            placeholder="Password"
             value={data.password}
             onChange={this.onChange}
           />
         </Form.Field>
-        <Button primary>Login</Button>
+        <Button primary style={{ margin: "5px" }}>
+          Sign In
+        </Button>
       </Form>
     );
   }
 }
+
+const formLabelStyle = { color: "#dfedf2" };
 
 export default LoginForm;
