@@ -32,7 +32,7 @@ class LoginForm extends React.Component {
     console.log(response);
     //navigate to next page
     if (response != null) {
-      window.location.href = "/Dashboard";
+      window.location.href = "/dashboard";
     }
   };
 
