@@ -51,10 +51,10 @@ router.post('/login', (req, res) => {
     console.log(errors);
     return res.status(400).json(errors);
   }
-  const { email } = post;
+  const { username } = post;
   const { password } = post;
   const saltRounds = 10;
-  const sql = `SELECT * FROM Users WHERE email='${email}' AND password=${password}`;
+  const sql = `SELECT * FROM Users WHERE username='${username}' AND password=${password}`;
   const query = db.query(sql, (err, result) => {
     if (err) throw err;
     console.log(result);
@@ -63,12 +63,12 @@ router.post('/login', (req, res) => {
         res.send(null);
       }
     });
-    // Login Successful
     if (result.length > 0) {
       res.send(result);
     }
     // Incorrect Username or Password
     else {
+      // Login Successful
       res.send(null);
       console.log('incorrect u and p');
     }
