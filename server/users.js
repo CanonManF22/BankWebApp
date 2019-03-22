@@ -9,27 +9,34 @@ const db = require('./db');
 const validateRegisterInput = require('./register');
 const validateLoginInput = require('./login');
 
-// TODO: Load User model from mysql
-
 // @route POST users/register
 // @desc Register user
 // @access Public
-router.get('/test', function(req, res) {
-  res.send('yo test');
-});
-
 router.post('/register', (req, res) => {
+  const { post } = req.body;
   // Form validation
-  const { errors, isValid } = validateRegisterInput(req.body);
+  const { errors, isValid } = validateRegisterInput(post);
   console.log('hit registration');
   // Check validation
   if (!isValid) {
     return res.status(400).json(errors);
   }
   // if the registration details are valid, insert user into database
-  // name, email, password
-
+  // username, password, email, firstname, lastname
+  const { username } = post;
+  const { password } = post;
+  const { email } = post;
+  const { firstname } = post;
+  const { lastname } = post;
   // / Hash password before saving in database with bcrypt
+  const saltRounds = 10;
+  bcrypt.hash(password, saltRounds, function(err, hash) {
+    if (err) {
+      console.log(err);
+    } else {
+      const sql = `INSERT INTO Users(username, password, email, firstname, lastname) VALUES (${username}, ${hash}, ${email}, ${firstname}, ${lastname});`;
+    }
+  });
 });
 
 // @route POST users/login
@@ -44,28 +51,27 @@ router.post('/login', (req, res) => {
     console.log(errors);
     return res.status(400).json(errors);
   }
-  const { email } = post;
+  const { username } = post;
   const { password } = post;
-  console.log(email);
-  console.log(password);
-  // check if user exists in db
-  // const sql = `SELECT * FROM Users WHERE email=${email} AND password=${password}`;
-  // /const sql = 'SELECT * FROM Users WHERE email='${email}' AND password='${password};
-  const works =
-    "SELECT * FROM Users WHERE email='test1@gmail.com' AND password=1234";
-  console.log(works);
-  const sql =
-    "SELECT * FROM Users WHERE email='test1@gmail.com' AND password=1234";
-  console.log(sql);
+  const saltRounds = 10;
+  const sql = `SELECT * FROM Users WHERE username='${username}' AND password=${password}`;
   const query = db.query(sql, (err, result) => {
-    // db.get().query(
-    //   'SELECT * FROM Users WHERE email = ? AND password = ?',
-    //   email,
-    //   password,
-    //   (err, result) => {
     if (err) throw err;
     console.log(result);
-    res.send('Posts fetched...');
+    bcrypt.compare(password, result.password, function(response) {
+      if (response === true) {
+        res.send(null);
+      }
+    });
+    if (result.length > 0) {
+      res.send(result);
+    }
+    // Incorrect Username or Password
+    else {
+      // Login Successful
+      res.send(null);
+      console.log('incorrect u and p');
+    }
   });
 });
 
