@@ -32,7 +32,7 @@ class LoginForm extends React.Component {
     console.log(response);
     //navigate to next page
     if (response != null) {
-      window.location.href = "";
+      window.location.href = "/Dashboard";
     }
   };
 
@@ -67,7 +67,5 @@ class LoginForm extends React.Component {
     );
   }
 }
-
-const formLabelStyle = { color: "#dfedf2" };
 
 export default LoginForm;
