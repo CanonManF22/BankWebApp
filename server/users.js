@@ -46,6 +46,7 @@ router.post('/login', (req, res) => {
   // Form validation
   const { post } = req.body;
   const { errors, isValid } = validateLoginInput(post);
+  console.log(post);
   // Check validation
   if (!isValid) {
     console.log(errors);
@@ -53,7 +54,7 @@ router.post('/login', (req, res) => {
   }
   const { username } = post;
   const { password } = post;
-  const saltRounds = 10;
+
   const sql = `SELECT * FROM Users WHERE username='${username}' AND password=${password}`;
   const query = db.query(sql, (err, result) => {
     if (err) throw err;
