@@ -14,28 +14,38 @@ const validateLoginInput = require('./login');
 // @access Public
 router.post('/register', (req, res) => {
   const { post } = req.body;
+  console.log(post);
   // Form validation
   const { errors, isValid } = validateRegisterInput(post);
   console.log('hit registration');
   // Check validation
   if (!isValid) {
+    console.log('not valid');
     return res.status(400).json(errors);
   }
   // if the registration details are valid, insert user into database
-  // username, password, email, firstname, lastname
+  // username, password, email, firstName, lastName
   const { username } = post;
   const { password } = post;
   const { email } = post;
-  const { firstname } = post;
-  const { lastname } = post;
+  const { firstName } = post;
+  const { lastName } = post;
   // / Hash password before saving in database with bcrypt
-  const saltRounds = 10;
-  bcrypt.hash(password, saltRounds, function(err, hash) {
-    if (err) {
-      console.log(err);
-    } else {
-      const sql = `INSERT INTO Users(username, password, email, firstname, lastname) VALUES (${username}, ${hash}, ${email}, ${firstname}, ${lastname});`;
-    }
+  bcrypt.genSalt(10, (err, salt) => {
+    if (err) throw err;
+    bcrypt.hash(password, salt, (err, hash) => {
+      if (err) {
+        console.log(err);
+      } else {
+        console.log(hash.length);
+        const sql = `INSERT INTO Users(username, password, email, firstname, lastname) VALUES ('${username}', '${hash}', '${email}', '${firstName}', '${lastName}')`;
+        console.log(sql);
+        const query = db.query(sql, (err, result) => {
+          if (err) throw err;
+          console.log('Authentication Worked');
+        });
+      }
+    });
   });
 });
 
@@ -55,24 +65,16 @@ router.post('/login', (req, res) => {
   const { username } = post;
   const { password } = post;
 
-  const sql = `SELECT * FROM Users WHERE username='${username}' AND password=${password}`;
-  const query = db.query(sql, (err, result) => {
+  const sql = `SELECT * FROM Users WHERE username='${username}'`;
+  db.query(sql, (err, result) => {
     if (err) throw err;
     console.log(result);
-    bcrypt.compare(password, result.password, function(response) {
-      if (response === true) {
-        res.send(null);
-      }
+    const hashed = result[0].password;
+    bcrypt.compare(password, hashed, (error, result1) => {
+      if (error) throw error;
+      console.log(hashed);
+      console.log(result1);
     });
-    if (result.length > 0) {
-      res.send(result);
-    }
-    // Incorrect Username or Password
-    else {
-      // Login Successful
-      res.send(null);
-      console.log('incorrect u and p');
-    }
   });
 });
 
