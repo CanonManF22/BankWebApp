@@ -43,6 +43,7 @@ router.post('/register', (req, res) => {
         const query = db.query(sql, (err, result) => {
           if (err) throw err;
           console.log('Authentication Worked');
+          res.send();
         });
       }
     });
@@ -68,13 +69,19 @@ router.post('/login', (req, res) => {
   const sql = `SELECT * FROM Users WHERE username='${username}'`;
   db.query(sql, (err, result) => {
     if (err) throw err;
-    console.log(result);
     const hashed = result[0].password;
     bcrypt.compare(password, hashed, (error, result1) => {
       if (error) throw error;
-      console.log(hashed);
-      console.log(result1);
     });
+    if (result.length > 0) {
+      res.send({
+        Success: true
+      });
+    } else {
+      res.send({
+        Success: false
+      });
+    }
   });
 });
 

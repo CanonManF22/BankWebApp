@@ -29,11 +29,14 @@ class LoginForm extends React.Component {
       body: JSON.stringify({ post: data })
     }).then(res => res.json());
     this.setState({ responseToPost: response });
-    console.log(response);
-    //navigate to next page
-    if (response != null) {
-      window.location.href = "/dashboard";
+    if (response.Success) {
+      window.location.href = "/DashboardPage";
     }
+    else{
+      //wrong pw, try again
+      window.location.href = "/";
+    }
+    
   };
 
   render() {
