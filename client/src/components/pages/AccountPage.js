@@ -7,18 +7,16 @@ const divStyle = {
   marginTop: "0px"
 };
 
-
 class Page extends React.Component {
   constructor(props){
     super(props);
     this.state = {
-      
+      user_id: null,
     };
   }
 
-
-  
   renderAccount(i){
+    console.log('yo')
     return (
     <div>
       temp
@@ -27,10 +25,13 @@ class Page extends React.Component {
   }
 
   //gets all accounts of a given user_id
-  fetchAccounts(user_id) = async e => {
-    console.log('finding accounts under ', user_id);
+  fetchAccounts = async e =>{
+    //const {user_id} = this.state;
+    const user_id = 1
+    console.log('finding accounts under ');
     e.preventDefault();
     const { data } = this.state;
+    console.log('DATA', data)
     const response = await fetch("http://localhost:8080/accounts/:user_id/", {
       mode: "cors",
       method: "POST",
@@ -40,21 +41,21 @@ class Page extends React.Component {
       body: JSON.stringify({ post: data })
     }).then(res => res.json());
     this.setState({ responseToPost: response });
-    if (response.Success) {
-      window.location.href = "/dashboard";
+    if (response.length < 1) {
+      console.log('no accounts for user');
     }
     else{
-      //wrong pw, try again, maybe include alert
-      window.location.href = "/";
+      console.log(response)
+      return response;
     }
     
   };
-
   
   //fetches account info from api, renders each account, where do we get user id from?
   render() {
-    const user_id = '';
-    const {accounts} = this.fetchAccounts(user_id);
+    //TODO, hardcoded with test user_id
+    const resp = this.fetchAccounts
+    console.log(this.fetchAccounts)
     return(
       <div>
         {this.renderAccount(0)}
