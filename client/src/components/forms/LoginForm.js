@@ -30,10 +30,10 @@ class LoginForm extends React.Component {
     }).then(res => res.json());
     this.setState({ responseToPost: response });
     if (response.Success) {
-      window.location.href = "/DashboardPage";
+      window.location.href = "/dashboard";
     }
     else{
-      //wrong pw, try again
+      //wrong pw, try again, maybe include alert
       window.location.href = "/";
     }
     
