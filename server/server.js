@@ -3,7 +3,7 @@ const bodyParser = require('body-parser');
 const passport = require('passport');
 const cors = require('cors');
 const users = require('./users');
-const accounts = require('./account');
+//const accounts = require('./account');
 
 const app = express();
 
@@ -22,7 +22,7 @@ app.use(bodyParser.json());
 
 // Routes
 app.use('/users', users);
-app.use('/accounts', accounts);
+//app.use('/accounts', accounts);
 // Renders if react isn't running
 app.get('/', function(req, res) {
   res.send('React Not Running');
