@@ -23,17 +23,22 @@ class RegistrationPage extends React.Component {
   };
 
   handleSubmit = async e => {
-    e.preventDefault();
     const { data } = this.state;
-    const response = await fetch("http://localhost:8080/users/register", {
-      mode: "cors",
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({ post: data })
-    }).then(res => res.json());
-    this.setState({ responseToPost: response });
+    if (data.password === data.passwordConfirm) {
+      e.preventDefault();
+      const response = await fetch("http://localhost:8080/users/register", {
+        mode: "cors",
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ post: data })
+      }).then(res => res.json());
+      this.setState({ responseToPost: response });
+    } else {
+      console.log("Bad passwords");
+      window.alert("Passwords don't match!");
+    }
   };
 
   //required to accept inputs into form
@@ -77,7 +82,7 @@ class RegistrationPage extends React.Component {
           </Form.Field>
           <Form.Field>
             <label htmlFor="passwordConfirm" style={{ color: "#dfedf2" }}>
-              Confirm Your Password [note: currently not implemented]
+              Confirm Your Password
             </label>
             <input
               type="password"
