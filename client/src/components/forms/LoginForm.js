@@ -31,12 +31,13 @@ class LoginForm extends React.Component {
     this.setState({ responseToPost: response });
     if (response.Success) {
       window.location.href = "/dashboard";
-    }
-    else{
+    } else {
       //wrong pw, try again, maybe include alert
-      window.location.href = "/";
+      window.alert(
+        "The Username or Password you entered does not match our records."
+      );
+      //window.location.href = "/";
     }
-    
   };
 
   render() {

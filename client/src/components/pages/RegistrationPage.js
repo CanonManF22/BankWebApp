@@ -36,7 +36,6 @@ class RegistrationPage extends React.Component {
       }).then(res => res.json());
       this.setState({ responseToPost: response });
     } else {
-      console.log("Bad passwords");
       window.alert("Passwords don't match!");
     }
   };
