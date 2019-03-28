@@ -1,6 +1,5 @@
 import React from "react";
 import { withRouter } from "react-router-dom";
-import { Link } from "react-router-dom";
 
 const divStyle = {
   backgroundColor: "#4e74a6",
@@ -22,7 +21,6 @@ class DashboardPage extends React.Component {
     return (
       <div style={divStyle}>
         <h1 style={{ color: "#ffffff" }}>Online Bank</h1>
-
         <button onClick={this.routeChangeAcc}>Accounts</button>
         <button onClick={this.routeChangeTrans}>Transfers</button>
         <button onClick={this.routeChangeBills}>Pay Bills</button>
@@ -34,9 +32,13 @@ class DashboardPage extends React.Component {
   /**
    * Couldn't figure out how to pass var as parameter, so seperate routing per button for now
    */
-  routeChangeAcc() {
-    this.props.history.push("accounts");
-  }
+  routeChangeAcc = () => {
+    this.props.history.push({
+      uid: this.props.location.state.uID,
+      pathname: "/accounts",
+      state: { uID: 2 }
+    });
+  };
   routeChangeTrans() {
     this.props.history.push("transfers");
   }

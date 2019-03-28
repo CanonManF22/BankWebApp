@@ -1,5 +1,5 @@
 import React from "react";
-import { Route } from "react-router-dom";
+import { Route, withRouter } from "react-router-dom";
 import RegPage from "./components/pages/RegistrationPage";
 import LoginPage from "./components/pages/LoginPage";
 import DashboardPage from "./components/pages/DashboardPage";
@@ -28,4 +28,4 @@ const App = () => (
   </div>
 );
 
-export default App;
+export default withRouter(App);

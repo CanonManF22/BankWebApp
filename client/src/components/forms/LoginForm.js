@@ -1,5 +1,6 @@
 import React from "react";
 import { Form, Button } from "semantic-ui-react";
+import { withRouter } from "react-router-dom";
 
 class LoginForm extends React.Component {
   state = {
@@ -30,13 +31,14 @@ class LoginForm extends React.Component {
     }).then(res => res.json());
     this.setState({ responseToPost: response });
     if (response.Success) {
-      window.location.href = "/dashboard";
+      this.props.history.push({
+        pathname: "/dashboard",
+        state: { uID: 12345 }
+      });
     } else {
-      //wrong pw, try again, maybe include alert
       window.alert(
         "The Username or Password you entered does not match our records."
       );
-      //window.location.href = "/";
     }
   };
 
@@ -72,4 +74,4 @@ class LoginForm extends React.Component {
   }
 }
 
-export default LoginForm;
+export default withRouter(LoginForm);
