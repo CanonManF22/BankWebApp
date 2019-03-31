@@ -30,12 +30,12 @@ class Page extends React.Component {
   //gets all accounts of a given user_id
   fetchAccounts = async e => {
     //const {user_id} = this.state;
-    const user_id = 1;
-    console.log("finding accounts under ");
-    e.preventDefault();
+    //const user_id = 1;
+    console.log("finding accounts under ", this.props.location.state.uID);
+    //e.preventDefault();
     const { data } = this.state;
     console.log("DATA", data);
-    const response = await fetch("http://localhost:8080/accounts/:user_id/", {
+    const response = await fetch(`http://localhost:8080/accounts/:${this.state.user_id}/`, {
       mode: "cors",
       method: "POST",
       headers: {
@@ -56,7 +56,7 @@ class Page extends React.Component {
   render() {
     //TODO, hardcoded with test user_id
     const resp = this.fetchAccounts;
-    console.log(this.fetchAccounts);
+    //console.log(this.fetchAccounts());
     return (
       <div>
         <h1 style={{ color: "#ffffff" }}>Placeholder [ATMs]</h1>
@@ -64,6 +64,7 @@ class Page extends React.Component {
       </div>
     );
   }
+
 }
 
 class AccountPage extends React.Component {
@@ -76,8 +77,34 @@ class AccountPage extends React.Component {
     );
   }
 
+  fetchAccounts = async e => {
+    //const {user_id} = this.state;
+    //const user_id = 1;
+    console.log("finding accounts under ", this.props.location.state.uID);
+    //e.preventDefault();
+    // const { data } = this.state;
+    // console.log("DATA", data);
+    console.log(`http://localhost:8080/accounts/${this.props.location.state.uID}`)
+    const data = ''
+    const response = await fetch(`http://localhost:8080/accounts/${this.props.location.state.uID}`, {
+      mode: "cors",
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json"
+      }
+    }).then(res=>res.json());
+    this.setState({ responseToPost: response });
+    if (response.length < 1) {
+      console.log("no accounts for user");
+    } else {
+      console.log(response);
+      return response;
+    }
+  };
+
   debug = () => {
     console.log(this.props.location.state.uID);
+    console.log(this.fetchAccounts())
   };
 }
 
