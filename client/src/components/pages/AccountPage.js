@@ -9,17 +9,18 @@ const divStyle = {
 };
 
 class Page extends React.Component {
-  // constructor(props) {
-  //   super(props);
-  //   this.state = {
-  //     user_id: null,
-  //     accounts: ["acc1", "acc2"]
-  //   };
-  // }
+  constructor(props) {
+    super(props);
+    this.state = {
+      user_id: null,
+      accounts: this.fetchAccounts()
+    };
+  }
   
   fetchAccounts = async e => {
     const user_id = this.props.location.state.uID;
     console.log(`http://localhost:8080/accounts/${user_id}`)
+    
     const data = ''
     const response = await fetch(`http://localhost:8080/accounts/${user_id}`, {
       mode: "cors",
@@ -28,25 +29,26 @@ class Page extends React.Component {
         "Content-Type": "application/json"
       }
     }).then(res=>res.json());
-    this.setState({ responseToPost: response });
+    this.setState({ accounts: response });
     if (response.length < 1) {
-      console.log("no accounts for user");
+      window.alert(
+        "No accounts for this user"
+      );
     }
     else{
-      window.alert(
-        "The Username or Password you entered does not match our records."
-      );
+      return response
     }
   };
 
   //create an account div for every account from fetch
   renderAccounts = () => {
-    const accounts = this.fetchAccounts()
-    return(
-      <h1>{accounts.map(account => (
-        <li key={account}>{account}</li>
-      ))}</h1>
-    )
+    
+    // console.log(accounts)
+    // return(
+    //   <h1>{accounts.map(account => (
+    //     <li key={account}>{account}</li>
+    //   ))}</h1>
+    // )
   };
 
   render() {
@@ -54,6 +56,7 @@ class Page extends React.Component {
       <div>
         <h1 style={{ color: "#ffffff" }}>Placeholder [ATMs]</h1>
         <h1>{this.renderAccounts()}</h1>
+        <h1>{JSON.stringify(this.state.accounts)}</h1>
       </div>
     );
   }
