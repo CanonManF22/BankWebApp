@@ -9,84 +9,19 @@ const divStyle = {
 };
 
 class Page extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      user_id: null,
-      accounts: ["acc1", "acc2"]
-    };
-  }
-
-  renderAccounts = () => {
-    return (
-      <ul>
-        {this.state.accounts.map(tag => (
-          <li key={tag}>{tag}</li>
-        ))}
-      </ul>
-    );
-  };
-
-  //gets all accounts of a given user_id
+  // constructor(props) {
+  //   super(props);
+  //   this.state = {
+  //     user_id: null,
+  //     accounts: ["acc1", "acc2"]
+  //   };
+  // }
+  
   fetchAccounts = async e => {
-    //const {user_id} = this.state;
-    //const user_id = 1;
-    console.log("finding accounts under ", this.props.location.state.uID);
-    //e.preventDefault();
-    const { data } = this.state;
-    console.log("DATA", data);
-    const response = await fetch(`http://localhost:8080/accounts/:${this.state.user_id}/`, {
-      mode: "cors",
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({ post: data })
-    }).then(res => res.json());
-    this.setState({ responseToPost: response });
-    if (response.length < 1) {
-      console.log("no accounts for user");
-    } else {
-      console.log(response);
-      return response;
-    }
-  };
-
-  //fetches account info from api, renders each account, where do we get user id from?
-  render() {
-    //TODO, hardcoded with test user_id
-    const resp = this.fetchAccounts;
-    //console.log(this.fetchAccounts());
-    return (
-      <div>
-        <h1 style={{ color: "#ffffff" }}>Placeholder [ATMs]</h1>
-        {this.renderAccounts()}
-      </div>
-    );
-  }
-
-}
-
-class AccountPage extends React.Component {
-  render() {
-    return (
-      <div style={divStyle}>
-        <button onClick={this.debug}>debug</button>
-        <Page />
-      </div>
-    );
-  }
-
-  fetchAccounts = async e => {
-    //const {user_id} = this.state;
-    //const user_id = 1;
-    console.log("finding accounts under ", this.props.location.state.uID);
-    //e.preventDefault();
-    // const { data } = this.state;
-    // console.log("DATA", data);
-    console.log(`http://localhost:8080/accounts/${this.props.location.state.uID}`)
+    const user_id = this.props.location.state.uID;
+    console.log(`http://localhost:8080/accounts/${user_id}`)
     const data = ''
-    const response = await fetch(`http://localhost:8080/accounts/${this.props.location.state.uID}`, {
+    const response = await fetch(`http://localhost:8080/accounts/${user_id}`, {
       mode: "cors",
       method: "GET",
       headers: {
@@ -96,16 +31,32 @@ class AccountPage extends React.Component {
     this.setState({ responseToPost: response });
     if (response.length < 1) {
       console.log("no accounts for user");
-    } else {
-      console.log(response);
-      return response;
+    }
+    else{
+      window.alert(
+        "The Username or Password you entered does not match our records."
+      );
     }
   };
 
-  debug = () => {
-    console.log(this.props.location.state.uID);
-    console.log(this.fetchAccounts())
+  //create an account div for every account from fetch
+  renderAccounts = () => {
+    const accounts = this.fetchAccounts()
+    return(
+      <h1>{accounts.map(account => (
+        <li key={account}>{account}</li>
+      ))}</h1>
+    )
   };
+
+  render() {
+    return (
+      <div>
+        <h1 style={{ color: "#ffffff" }}>Placeholder [ATMs]</h1>
+        <h1>{this.renderAccounts()}</h1>
+      </div>
+    );
+  }
 }
 
-export default withRouter(AccountPage);
+export default withRouter(Page);
