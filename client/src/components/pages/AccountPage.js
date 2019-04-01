@@ -8,6 +8,17 @@ const divStyle = {
   marginTop: "0px"
 };
 
+//try to render a random button for now later: <h1>{props.accounts}</h1>
+function Account(props) {
+  console.log(JSON.stringify(props.value.accounts.accountID))
+  return (
+    <div>
+      <h1>{'AccountID ' + props.value.accounts.accountID + ' ' + props.value.accounts.accType}</h1>
+      <h3>{'Account Balance ' + props.value.accounts.accBalance}</h3>
+    </div>
+  )
+}
+
 class Page extends React.Component {
   constructor(props) {
     super(props);
@@ -15,6 +26,7 @@ class Page extends React.Component {
       user_id: null,
       accounts: this.fetchAccounts()
     };
+    console.log('this is accounts', this.state.accounts)
   }
   
   fetchAccounts = async e => {
@@ -36,27 +48,28 @@ class Page extends React.Component {
       );
     }
     else{
+      this.state.accounts = response[0]
+      this.props.history.push({accounts: response})
+      // console.log('yo')
+      // console.log(this.props.history)
       return response
     }
   };
 
   //create an account div for every account from fetch
+  // display accType and accBalance
   renderAccounts = () => {
-    
-    // console.log(accounts)
-    // return(
-    //   <h1>{accounts.map(account => (
-    //     <li key={account}>{account}</li>
-    //   ))}</h1>
-    // )
+    return (
+      <Account value = {this.state}/>
+    );
   };
 
   render() {
     return (
       <div>
         <h1 style={{ color: "#ffffff" }}>Placeholder [ATMs]</h1>
-        <h1>{this.renderAccounts()}</h1>
-        <h1>{JSON.stringify(this.state.accounts)}</h1>
+        {this.renderAccounts()}
+        
       </div>
     );
   }
