@@ -1,5 +1,6 @@
 import React from "react";
 import { withRouter } from "react-router-dom";
+import {Dropdown} from 'react-bootstrap';
 
 const divStyle = {
   backgroundColor: "#4e74a6",
@@ -8,7 +9,6 @@ const divStyle = {
   marginTop: "0px"
 };
 
-//try to render a random button for now later: <h1>{props.accounts}</h1>
 function Account(props) {
   console.log(JSON.stringify(props.value.accounts.accountID))
   return (
@@ -32,7 +32,7 @@ class Page extends React.Component {
   fetchAccounts = async e => {
     const user_id = this.props.location.state.uID;
     console.log(`http://localhost:8080/accounts/${user_id}`)
-    
+  
     const data = ''
     const response = await fetch(`http://localhost:8080/accounts/${user_id}`, {
       mode: "cors",
@@ -48,10 +48,9 @@ class Page extends React.Component {
       );
     }
     else{
+      // no idea why I have to use state and props
       this.state.accounts = response[0]
       this.props.history.push({accounts: response})
-      // console.log('yo')
-      // console.log(this.props.history)
       return response
     }
   };
@@ -70,6 +69,28 @@ class Page extends React.Component {
         <h1 style={{ color: "#ffffff" }}>Placeholder [ATMs]</h1>
         {this.renderAccounts()}
         
+        <Dropdown>
+          <Dropdown.Toggle variant="success" id="dropdown-basic">
+            Open Account
+          </Dropdown.Toggle>
+
+          <Dropdown.Menu>
+            <Dropdown.Item href="#/action-1">Checkings</Dropdown.Item>
+            <Dropdown.Item href="#/action-2">Savings</Dropdown.Item>
+          </Dropdown.Menu>
+        </Dropdown>;
+
+      <Dropdown>
+        <Dropdown.Toggle variant="success" id="dropdown-basic">
+          Close Account
+        </Dropdown.Toggle>
+        <Dropdown.Menu>
+          <Dropdown.Item href="#/action-1">Account 1</Dropdown.Item>
+          <Dropdown.Item href="#/action-2">Account 2</Dropdown.Item>
+        </Dropdown.Menu>
+      </Dropdown>;
+      
+      <button value = 'deposit check'>Deposit Check</button>
       </div>
     );
   }
