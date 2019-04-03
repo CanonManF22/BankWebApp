@@ -11,7 +11,7 @@ const divStyle = {
 
 const LoginPage = () => (
   <div style={divStyle}>
-    <h1 style={{ color: "#ffffff" }}>Online Bank</h1>
+    
 
     <LoginForm />
 

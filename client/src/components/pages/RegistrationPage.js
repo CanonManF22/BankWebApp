@@ -1,5 +1,6 @@
 import React from "react";
 import { Form, Button } from "semantic-ui-react";
+import { Link } from "react-router-dom";
 
 const divStyle = {
   backgroundColor: "#4e74a6",
@@ -135,6 +136,16 @@ class RegistrationPage extends React.Component {
             Create Account
           </Button>
         </Form>
+        <Link
+          to="/"
+          style={{
+            color: "#ffffff",
+            margin: "5px",
+            textDecorationLine: "underline"
+          }}
+          >
+            Have an account? Log In
+        </Link>
       </div>
     );
   }
