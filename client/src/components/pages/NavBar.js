@@ -18,13 +18,24 @@ class NavBar extends React.Component {
   }
 
   render() {
+    //don't render nav bar on login or registration
+    const displayNav = !(
+      this.props.location.pathname === "/" ||
+      this.props.location.pathname === "/registration"
+    );
     return (
-      <div style={divStyle}>
-        <h1 style={{ color: "#ffffff" }}>Online Bank</h1>
-        <button onClick={this.routeChangeAcc}>Accounts</button>
-        <button onClick={this.routeChangeTrans}>Transfers</button>
-        <button onClick={this.routeChangeBills}>Pay Bills</button>
-        <button onClick={this.routeChangeATMs}>ATMs</button>
+      <div>
+        {displayNav ? (
+          <div style={divStyle}>
+            <h1 style={{ color: "#ffffff" }}>Online Bank</h1>
+            <button onClick={this.routeChangeAcc}>Accounts</button>
+            <button onClick={this.routeChangeTrans}>Transfers</button>
+            <button onClick={this.routeChangeBills}>Pay Bills</button>
+            <button onClick={this.routeChangeATMs}>ATMs</button>
+          </div>
+        ) : (
+          <h1 style={divStyle}>Welcome to Online Banking</h1>
+        )}
       </div>
     );
   }
@@ -47,8 +58,8 @@ class NavBar extends React.Component {
   }
   routeChangeATMs() {
     this.props.history.push("atms");
-    console.log(this.state)
-    console.log(this.props)
+    console.log(this.state);
+    console.log(this.props);
   }
 }
 

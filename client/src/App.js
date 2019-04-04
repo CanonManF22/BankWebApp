@@ -19,7 +19,7 @@ const divStyle = {
 
 const App = () => (
   <div className="ui container" style={divStyle}>
-    <NavBar></NavBar>
+    <NavBar />
     <Route path="/" exact component={LoginPage} />
     <Route path="/registration" exact component={RegPage} />
     <Route path="/dashboard" exact component={Dashboard} />
