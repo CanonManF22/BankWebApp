@@ -64,7 +64,10 @@ class NavBar extends React.Component {
     });
   }
   routeChangeATMs() {
-    this.props.history.push("atms");
+    this.props.history.push({
+      pathname: "/atms",
+      state: { uID: this.props.location.state.uID }
+    });
   }
 }
 
