@@ -31,11 +31,13 @@ class LoginForm extends React.Component {
     }).then(res => res.json());
     this.setState({ responseToPost: response });
     if (response.Success) {
-      const {user_id} = response
-      this.props.history.push(
-        {
+      // user_id is never returned from response!!
+      //const { user_id } = response;
+      //console.log(response);
+      const user_id = 1; //temporary placeholder
+      this.props.history.push({
         pathname: "/dashboard",
-        state: { uID: user_id}
+        state: { uID: user_id }
       });
     } else {
       window.alert(

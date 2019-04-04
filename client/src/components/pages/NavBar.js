@@ -5,7 +5,8 @@ const divStyle = {
   backgroundColor: "#4e74a6",
   padding: "50px",
   margin: "50px",
-  marginTop: "0px"
+  marginTop: "0px",
+  color: "#ffffff"
 };
 
 class NavBar extends React.Component {
@@ -44,22 +45,26 @@ class NavBar extends React.Component {
    * Couldn't figure out how to pass var as parameter, so seperate routing per button for now
    */
   routeChangeAcc = () => {
+    console.log(this.props.location.state);
     this.props.history.push({
-      uid: this.props.location.state.uID,
       pathname: "/accounts",
-      state: { uID: 2 }
+      state: { uID: this.props.location.state.uID }
     });
   };
   routeChangeTrans() {
-    this.props.history.push("transfers");
+    this.props.history.push({
+      pathname: "/transfers",
+      state: { uID: this.props.location.state.uID }
+    });
   }
   routeChangeBills() {
-    this.props.history.push("bills");
+    this.props.history.push({
+      pathname: "/bills",
+      state: { uID: this.props.location.state.uID }
+    });
   }
   routeChangeATMs() {
     this.props.history.push("atms");
-    console.log(this.state);
-    console.log(this.props);
   }
 }
 
