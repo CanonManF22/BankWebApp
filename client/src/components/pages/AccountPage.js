@@ -1,6 +1,5 @@
 import React from "react";
 import { withRouter } from "react-router-dom";
-import { Dropdown } from "react-bootstrap";
 
 const divStyle = {
   backgroundColor: "#4e74a6",
@@ -9,38 +8,35 @@ const divStyle = {
   marginTop: "0px"
 };
 
-function Account(props) {
-  console.log(JSON.stringify(props.value.accounts.accountID));
-  return (
-    <div>
-      <h1>
-        {"AccountID " +
-          props.value.accounts.accountID +
-          " " +
-          props.value.accounts.accType}
-      </h1>
-      <h3>{"Account Balance " + props.value.accounts.accBalance}</h3>
-    </div>
-  );
-}
+const divStyleLight = {
+  backgroundColor: "#dfedf2",
+  padding: "20px",
+  margin: "20px",
+  color: "#72736e"
+};
 
 class Page extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       user_id: null,
-      accounts: this.fetchAccounts()
+      accounts: []
     };
-    console.log("this is accounts", this.state.accounts);
+    //console.log("this is accounts", this.state.accounts);
+  }
+
+  //wait until info fetched
+  componentDidMount() {
+    this.fetchAccounts().then(res => this.setState({ accounts: res }));
   }
 
   fetchAccounts = async e => {
     //not logged in check to prevent fatal crash
     if (this.props.location.state === undefined) {
       window.alert(
-        "Error: Not Logged In. this.props.location.state is undefined."
+        "Error: Not Logged In.  this.props.location.state is undefined."
       );
-      return;
+      return [];
     }
 
     const user_id = this.props.location.state.uID;
@@ -58,24 +54,37 @@ class Page extends React.Component {
     if (response.length < 1) {
       window.alert("No accounts for this user");
     } else {
-      // no idea why I have to use state and props
-      this.state.accounts = response[0];
-      this.props.history.push({ accounts: response });
+      //debug array for testing
+      /*
+      const debugAccs = [
+        { key: 2, accBalance: "0", accType: "checking", accID: "0", uID: "0" },
+        { key: 1, accBalance: "1", accType: "savings", accID: "1", uID: "1" },
+        { key: 0, accBalance: "2", accType: "something", accID: "2", uID: "2" }
+      ]; */
       return response;
     }
   };
 
-  //create an account div for every account from fetch
-  // display accType and accBalance
-  renderAccounts = () => {
-    return <Account value={this.state} />;
-  };
-
   render() {
-    return (
-      <div>
-        <h1 style={{ color: "#ffffff" }}>Placeholder [ATMs]</h1>
-        {this.renderAccounts()}
+    const fetched = this.state.accounts;
+    return fetched.length ? (
+      <div style={divStyle}>
+        <h1 style={{ color: "#ffffff" }}>Your Accounts</h1>
+
+        {this.state.accounts.map(acc => (
+          <div style={divStyleLight}>
+            <h1>{acc.accType + " " + acc.accountID}</h1>
+            <h3>{"Account Balance: " + acc.accBalance}</h3>
+          </div>
+        ))}
+
+        <button value="deposit check">Deposit Check</button>
+      </div>
+    ) : (
+      <span style={divStyleLight}>No Accounts on Record.</span>
+    );
+    /*
+      non functional atm
         <Dropdown>
           <Dropdown.Toggle variant="success" id="dropdown-basic">
             Open Account
@@ -86,7 +95,7 @@ class Page extends React.Component {
             <Dropdown.Item href="#/action-2">Savings</Dropdown.Item>
           </Dropdown.Menu>
         </Dropdown>
-        ;
+
         <Dropdown>
           <Dropdown.Toggle variant="success" id="dropdown-basic">
             Close Account
@@ -96,9 +105,7 @@ class Page extends React.Component {
             <Dropdown.Item href="#/action-2">Account 2</Dropdown.Item>
           </Dropdown.Menu>
         </Dropdown>
-        ;<button value="deposit check">Deposit Check</button>
-      </div>
-    );
+    */
   }
 }
 
