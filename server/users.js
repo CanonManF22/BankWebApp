@@ -38,8 +38,8 @@ router.post('/register', (req, res) => {
         console.log(err);
       } else {
         console.log(hash.length);
-        //const sql = `INSERT INTO Users(username, password, email, firstname, lastname) VALUES ('${username}', '${hash}', '${email}', '${firstName}', '${lastName}')`;
-        
+        // const sql = `INSERT INTO Users(username, password, email, firstname, lastname) VALUES ('${username}', '${hash}', '${email}', '${firstName}', '${lastName}')`;
+
         const sql = `INSERT INTO bank.Users (username, password, email, firstname, lastname)
                       SELECT * FROM (SELECT '${username}', '${hash}', '${email}', '${firstName}', '${lastName}') AS tmp
                       WHERE NOT EXISTS (
@@ -82,7 +82,8 @@ router.post('/login', (req, res) => {
     });
     if (result.length > 0) {
       res.send({
-        Success: true
+        Success: true,
+        uID: result[0].uID
       });
     } else {
       res.send({
