@@ -22,6 +22,7 @@ class Page extends React.Component {
       user_id: null,
       accounts: []
     };
+    this.routeChangeCreateAcc = this.routeChangeCreateAcc.bind(this);
     //console.log("this is accounts", this.state.accounts);
   }
 
@@ -79,6 +80,8 @@ class Page extends React.Component {
         ))}
 
         <button value="deposit check">Deposit Check</button>
+       // <button value="create_account">Create an Account</button>
+        <button onClick={this.routeChangeCreateAcc}>Open A New Account</button>
       </div>
     ) : (
       <span style={divStyleLight}>No Accounts on Record.</span>
@@ -107,6 +110,16 @@ class Page extends React.Component {
         </Dropdown>
     */
   }
+
+  routeChangeCreateAcc = () => {
+    console.log(this.props.location.state);
+    this.props.history.push({
+      pathname: "/createAccount",
+      state: { uID: this.props.location.state.uID }
+    });
+  };
 }
+
+
 
 export default withRouter(Page);

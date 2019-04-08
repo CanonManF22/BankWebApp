@@ -50,6 +50,7 @@ router.post('/register', (req, res) => {
           if (err) throw err;
           console.log('Authentication Worked');
           res.send();
+
         });
       }
     });
