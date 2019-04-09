@@ -25,7 +25,7 @@ class RegistrationPage extends React.Component {
 
   handleSubmit = async e => {
     const { data } = this.state;
-    if (data.password === data.passwordConfirm) {
+    if (data.password === data.passwordConfirm && data.password.length > 5) {
       e.preventDefault();
       const response = await fetch("http://localhost:8080/users/register", {
         mode: "cors",
@@ -37,7 +37,7 @@ class RegistrationPage extends React.Component {
       }).then(window.alert("Registered!  Please Log In."));
       this.routeToLogin();
     } else {
-      window.alert("Passwords don't match!");
+      window.alert("Passwords don't match or are too short!");
     }
   };
 

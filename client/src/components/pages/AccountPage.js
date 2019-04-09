@@ -82,6 +82,7 @@ class Page extends React.Component {
           </div>
         ))}
 
+        <button onClick={this.routeChangeCreateAcc}>Open A New Account</button>
         <Dropdown>
           <Dropdown.Toggle variant="success" id="dropdown-basic">
             Open Account
