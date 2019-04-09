@@ -1,6 +1,6 @@
 import React from "react";
 import LoginForm from "../forms/LoginForm";
-import { Link } from "react-router-dom";
+import { Link, withRouter } from "react-router-dom";
 
 const divStyle = {
   backgroundColor: "#4e74a6",
@@ -11,8 +11,6 @@ const divStyle = {
 
 const LoginPage = () => (
   <div style={divStyle}>
-    
-
     <LoginForm />
 
     <Link
@@ -28,4 +26,4 @@ const LoginPage = () => (
   </div>
 );
 
-export default LoginPage;
+export default withRouter(LoginPage);

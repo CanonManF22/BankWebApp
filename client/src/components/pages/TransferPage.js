@@ -1,4 +1,5 @@
 import React from "react";
+import Button from "react-bootstrap/Button";
 
 const divStyle = {
   backgroundColor: "#4e74a6",
@@ -12,6 +13,12 @@ class TransferPage extends React.Component {
     return (
       <div style={divStyle}>
         <h1 style={{ color: "#ffffff" }}>Placeholder [Transfers]</h1>
+        <Button variant="primary" size="lg" block>
+          Transfers Between Chase Banks
+        </Button>
+        <Button variant="secondary" size="lg" block>
+          Transfers Between Other Banks
+        </Button>
       </div>
     );
   }

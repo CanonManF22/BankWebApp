@@ -1,6 +1,6 @@
 import React from "react";
 import { Form, Button } from "semantic-ui-react";
-import { Link } from "react-router-dom";
+import { Link, withRouter } from "react-router-dom";
 
 const divStyle = {
   backgroundColor: "#4e74a6",
@@ -34,11 +34,15 @@ class RegistrationPage extends React.Component {
           "Content-Type": "application/json"
         },
         body: JSON.stringify({ post: data })
-      }).then(res => res.json());
-      this.setState({ responseToPost: response });
+      }).then(window.alert("Registered!  Please Log In."));
+      this.routeToLogin();
     } else {
       window.alert("Passwords don't match!");
     }
+  };
+
+  routeToLogin = () => {
+    this.props.history.push("/");
   };
 
   //required to accept inputs into form
@@ -51,7 +55,7 @@ class RegistrationPage extends React.Component {
     const { data } = this.state;
     return (
       <div style={divStyle}>
-        <h1 style={{ color: "#ffffff" }}>Register a New Account</h1>
+        <h1 style={{ color: "#ffffff" }}>Register a New User Account</h1>
 
         <Form onSubmit={this.handleSubmit}>
           <Form.Field>
@@ -143,12 +147,12 @@ class RegistrationPage extends React.Component {
             margin: "5px",
             textDecorationLine: "underline"
           }}
-          >
-            Have an account? Log In
+        >
+          Have an account? Log In
         </Link>
       </div>
     );
   }
 }
 
-export default RegistrationPage;
+export default withRouter(RegistrationPage);

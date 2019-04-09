@@ -11,7 +11,7 @@ import ATMPage from "./components/pages/ATMPage";
 
 const divStyle = {
   backgroundColor: "#204f8c",
-  height: "100vh",
+  height: "150vh",
   width: "100vw",
   justifyContent: "center",
   alignItems: "center"

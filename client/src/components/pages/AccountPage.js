@@ -1,5 +1,6 @@
 import React from "react";
 import { withRouter } from "react-router-dom";
+import Dropdown from "react-bootstrap/Dropdown";
 
 const divStyle = {
   backgroundColor: "#4e74a6",
@@ -66,7 +67,9 @@ class Page extends React.Component {
   };
 
   render() {
-    const fetched = this.state.accounts;
+    let fetched = this.state.accounts;
+    if (fetched === undefined) fetched = [];
+    console.log(fetched);
     return fetched.length ? (
       <div style={divStyle}>
         <h1 style={{ color: "#ffffff" }}>Your Accounts</h1>
@@ -78,13 +81,6 @@ class Page extends React.Component {
           </div>
         ))}
 
-        <button value="deposit check">Deposit Check</button>
-      </div>
-    ) : (
-      <span style={divStyleLight}>No Accounts on Record.</span>
-    );
-    /*
-      non functional atm
         <Dropdown>
           <Dropdown.Toggle variant="success" id="dropdown-basic">
             Open Account
@@ -105,7 +101,11 @@ class Page extends React.Component {
             <Dropdown.Item href="#/action-2">Account 2</Dropdown.Item>
           </Dropdown.Menu>
         </Dropdown>
-    */
+        <button value="deposit check">Deposit Check</button>
+      </div>
+    ) : (
+      <span style={divStyleLight}>No Accounts on Record.</span>
+    );
   }
 }
 

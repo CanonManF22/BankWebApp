@@ -1,7 +1,9 @@
 import React from "react";
 import { withRouter } from "react-router-dom";
+import Button from "react-bootstrap/Button";
 
 const divStyle = {
+  textAlign: "right",
   backgroundColor: "#4e74a6",
   padding: "50px",
   margin: "50px",
@@ -28,14 +30,32 @@ class NavBar extends React.Component {
       <div>
         {displayNav ? (
           <div style={divStyle}>
-            <h1 style={{ color: "#ffffff" }}>Online Bank</h1>
-            <button onClick={this.routeChangeAcc}>Accounts</button>
-            <button onClick={this.routeChangeTrans}>Transfers</button>
-            <button onClick={this.routeChangeBills}>Pay Bills</button>
-            <button onClick={this.routeChangeATMs}>ATMs</button>
+            <h3 style={{ color: "#ffffff" }}>Welcome to Dash Banking</h3>
+            <Button onClick={this.routeChangeAcc} size="lg">
+              Accounts
+            </Button>
+            <Button onClick={this.routeChangeTrans} size="lg">
+              Transfers
+            </Button>
+            <Button onClick={this.routeChangeBills} size="lg">
+              Pay Bills
+            </Button>
+            <Button onClick={this.routeChangeATMs} size="lg">
+              ATMs
+            </Button>
+            <Button
+              onClick={this.routeChangeLogout}
+              size="lg"
+              variant="secondary"
+            >
+              Logout
+            </Button>
           </div>
         ) : (
-          <h1 style={divStyle}>Welcome to Online Banking</h1>
+          <div style={divStyle}>
+            <h1>Welcome to Dash Banking</h1>
+            <h2>a Chase partner</h2>
+          </div>
         )}
       </div>
     );
@@ -45,7 +65,6 @@ class NavBar extends React.Component {
    * Couldn't figure out how to pass var as parameter, so seperate routing per button for now
    */
   routeChangeAcc = () => {
-    console.log(this.props.location.state);
     this.props.history.push({
       pathname: "/accounts",
       state: { uID: this.props.location.state.uID }
@@ -69,6 +88,12 @@ class NavBar extends React.Component {
       state: { uID: this.props.location.state.uID }
     });
   }
+  routeChangeLogout = () => {
+    this.props.history.push({
+      pathname: "/",
+      state: {}
+    });
+  };
 }
 
 export default withRouter(NavBar);
