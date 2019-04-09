@@ -23,6 +23,7 @@ class Page extends React.Component {
       user_id: null,
       accounts: []
     };
+    this.routeChangeCreateAcc = this.routeChangeCreateAcc.bind(this);
     //console.log("this is accounts", this.state.accounts);
   }
 
@@ -107,6 +108,14 @@ class Page extends React.Component {
       <span style={divStyleLight}>No Accounts on Record.</span>
     );
   }
+
+  routeChangeCreateAcc = () => {
+    console.log(this.props.location.state);
+    this.props.history.push({
+      pathname: "/createAccount",
+      state: { uID: this.props.location.state.uID }
+    });
+  };
 }
 
 export default withRouter(Page);

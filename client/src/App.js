@@ -8,6 +8,7 @@ import AccountPage from "./components/pages/AccountPage";
 import TransferPage from "./components/pages/TransferPage";
 import BillPage from "./components/pages/BillPage";
 import ATMPage from "./components/pages/ATMPage";
+import CreateAccountPage from "./components/pages/CreateAccountPage";
 
 const divStyle = {
   backgroundColor: "#204f8c",
@@ -28,6 +29,7 @@ const App = () => (
     <Route path="/transfers" exact component={TransferPage} />
     <Route path="/bills" exact component={BillPage} />
     <Route path="/atms" exact component={ATMPage} />
+    <Route path="/createAccount" exact component={CreateAccountPage} />
   </div>
 );
 
