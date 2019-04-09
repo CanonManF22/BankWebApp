@@ -1,3 +1,5 @@
+NOTE: NEED TO COPY/PASTE EVERYTHING FROM CSS FOLDER INTO node_modules/react-bootstrap/dist/ IN ORDER TO RUN
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
