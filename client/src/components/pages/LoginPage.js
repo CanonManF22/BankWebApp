@@ -11,6 +11,15 @@ const divStyle = {
 
 const LoginPage = () => (
   <div style={divStyle}>
+    <h1
+      style={{
+        color: "#ffffff",
+        marginBottom: "20px"
+      }}
+    >
+      Start by Logging In
+    </h1>
+
     <LoginForm />
 
     <Link
