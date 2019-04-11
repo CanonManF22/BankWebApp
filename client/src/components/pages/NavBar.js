@@ -1,6 +1,9 @@
 import React from "react";
 import { withRouter } from "react-router-dom";
 import Button from "react-bootstrap/Button";
+import Navbar from "react-bootstrap/Navbar";
+import Nav from "react-bootstrap/Nav";
+import Form from "react-bootstrap/Form";
 
 const divStyle = {
   textAlign: "right",
@@ -31,25 +34,15 @@ class NavBar extends React.Component {
         {displayNav ? (
           <div style={divStyle}>
             <h3 style={{ color: "#ffffff" }}>Welcome to Dash Banking</h3>
-            <Button onClick={this.routeChangeAcc} size="lg">
-              Accounts
-            </Button>
-            <Button onClick={this.routeChangeTrans} size="lg">
-              Transfers
-            </Button>
-            <Button onClick={this.routeChangeBills} size="lg">
-              Pay Bills
-            </Button>
-            <Button onClick={this.routeChangeATMs} size="lg">
-              ATMs
-            </Button>
-            <Button
-              onClick={this.routeChangeLogout}
-              size="lg"
-              variant="secondary"
-            >
-              Logout
-            </Button>
+            <Navbar bg="light" variant="light">
+            <Nav className="mr-auto">
+            <Nav.Link onClick={this.routeChangeAcc}>Accounts</Nav.Link>
+            <Nav.Link onClick={this.routeChangeTrans}>Transfers</Nav.Link>
+            <Nav.Link onClick={this.routeChangeBills}>Bills</Nav.Link>
+            <Nav.Link onClick={this.routeChangeATMs}>ATMs</Nav.Link>
+            <Nav.Link onClick={this.routeChangeLogout}>Logout</Nav.Link>
+          </Nav>
+          </Navbar>
           </div>
         ) : (
           <div style={divStyle}>
