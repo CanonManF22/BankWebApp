@@ -30,6 +30,7 @@ router.post('/register', (req, res) => {
   const { email } = post;
   const { firstName } = post;
   const { lastName } = post;
+  const { userType } = post;
   // / Hash password before saving in database with bcrypt
   bcrypt.genSalt(10, (err, salt) => {
     if (err) throw err;
@@ -40,8 +41,8 @@ router.post('/register', (req, res) => {
         console.log(hash.length);
         // const sql = `INSERT INTO Users(username, password, email, firstname, lastname) VALUES ('${username}', '${hash}', '${email}', '${firstName}', '${lastName}')`;
 
-        const sql = `INSERT INTO bank.Users (username, password, email, firstname, lastname)
-                      SELECT * FROM (SELECT '${username}', '${hash}', '${email}', '${firstName}', '${lastName}') AS tmp
+        const sql = `INSERT INTO bank.Users (username, password, email, firstname, lastname, userType)
+                      SELECT * FROM (SELECT '${username}', '${hash}', '${email}', '${firstName}', '${lastName}', '${userType}') AS tmp
                       WHERE NOT EXISTS (
                       SELECT username, email FROM bank.Users WHERE username = '${username}' OR email = '${email}'
                       )LIMIT 1`;
@@ -50,7 +51,6 @@ router.post('/register', (req, res) => {
           if (err) throw err;
           console.log('Authentication Worked');
           res.send();
-
         });
       }
     });
