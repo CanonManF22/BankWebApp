@@ -17,7 +17,8 @@ class RegistrationPage extends React.Component {
       passwordConfirm: "",
       email: "",
       firstName: "",
-      lastName: ""
+      lastName: "",
+      userType: "user"
     },
     loading: false,
     errors: {}
@@ -25,6 +26,7 @@ class RegistrationPage extends React.Component {
 
   handleSubmit = async e => {
     const { data } = this.state;
+    console.log(data);
     if (data.password === data.passwordConfirm && data.password.length > 5) {
       e.preventDefault();
       const response = await fetch("http://localhost:8080/users/register", {
@@ -50,6 +52,13 @@ class RegistrationPage extends React.Component {
     this.setState({
       data: { ...this.state.data, [e.target.name]: e.target.value }
     });
+
+  //for user/manager
+  handleChange = e => {
+    const tempData = this.state.data;
+    tempData.userType = e.target.value;
+    this.setState({ tempData });
+  };
 
   render() {
     const { data } = this.state;
@@ -135,6 +144,15 @@ class RegistrationPage extends React.Component {
               value={data.email}
               onChange={this.onChange}
             />
+          </Form.Field>
+          <Form.Field>
+            <label htmlFor="userType" style={{ color: "#dfedf2" }}>
+              User Type
+            </label>
+            <select value={this.state.userType} onChange={this.handleChange}>
+              <option value="user">User</option>
+              <option value="manager">Manager</option>
+            </select>
           </Form.Field>
           <Button primary style={{ margin: "5px" }}>
             Create Account
