@@ -8,9 +8,19 @@ import Form from "react-bootstrap/Form";
 const divStyle = {
   textAlign: "right",
   backgroundColor: "#4e74a6",
-  padding: "50px",
+  padding: "25px",
   margin: "50px",
   marginTop: "0px",
+  color: "#ffffff"
+};
+
+const lightNavStyle = {
+  backgroundColor: "#4e74a6",
+  color: "#ffffff"
+};
+
+const darkNavStyle = {
+  backgroundColor: "#72736e",
   color: "#ffffff"
 };
 
@@ -33,16 +43,26 @@ class NavBar extends React.Component {
       <div>
         {displayNav ? (
           <div style={divStyle}>
-            <h3 style={{ color: "#ffffff" }}>Welcome to Dash Banking</h3>
-            <Navbar bg="light" variant="light">
-            <Nav className="mr-auto">
-            <Nav.Link onClick={this.routeChangeAcc}>Accounts</Nav.Link>
-            <Nav.Link onClick={this.routeChangeTrans}>Transfers</Nav.Link>
-            <Nav.Link onClick={this.routeChangeBills}>Bills</Nav.Link>
-            <Nav.Link onClick={this.routeChangeATMs}>ATMs</Nav.Link>
-            <Nav.Link onClick={this.routeChangeLogout}>Logout</Nav.Link>
-          </Nav>
-          </Navbar>
+            <Navbar style={{ backgroundColor: "#204f8c" }}>
+              <h3 style={{ color: "#ffffff" }}>Welcome to Dash Banking</h3>
+              <Nav className="ml-auto">
+                <Nav.Link style={lightNavStyle} onClick={this.routeChangeAcc}>
+                  Accounts
+                </Nav.Link>
+                <Nav.Link style={lightNavStyle} onClick={this.routeChangeTrans}>
+                  Transfers
+                </Nav.Link>
+                <Nav.Link style={lightNavStyle} onClick={this.routeChangeBills}>
+                  Bills
+                </Nav.Link>
+                <Nav.Link style={lightNavStyle} onClick={this.routeChangeATMs}>
+                  ATMs
+                </Nav.Link>
+                <Nav.Link style={darkNavStyle} onClick={this.routeChangeLogout}>
+                  Logout
+                </Nav.Link>
+              </Nav>
+            </Navbar>
           </div>
         ) : (
           <div style={divStyle}>
