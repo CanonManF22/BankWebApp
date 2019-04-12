@@ -1,26 +1,21 @@
 import React from "react";
 import { withRouter } from "react-router-dom";
-import Button from "react-bootstrap/Button";
 import Navbar from "react-bootstrap/Navbar";
 import Nav from "react-bootstrap/Nav";
-import Form from "react-bootstrap/Form";
-
-const divStyle = {
-  textAlign: "right",
-  backgroundColor: "#4e74a6",
-  padding: "25px",
-  margin: "50px",
-  marginTop: "0px",
-  color: "#ffffff"
-};
 
 const lightNavStyle = {
+  outlineStyle: "solid",
   backgroundColor: "#4e74a6",
+  paddingLeft: "20px",
+  paddingRight: "20px",
   color: "#ffffff"
 };
 
 const darkNavStyle = {
+  outlineStyle: "solid",
   backgroundColor: "#72736e",
+  paddingLeft: "20px",
+  paddingRight: "20px",
   color: "#ffffff"
 };
 
@@ -42,9 +37,25 @@ class NavBar extends React.Component {
     return (
       <div>
         {displayNav ? (
-          <div style={divStyle}>
-            <Navbar style={{ backgroundColor: "#204f8c" }}>
-              <h3 style={{ color: "#ffffff" }}>Welcome to Dash Banking</h3>
+          <div
+            style={{
+              paddingLeft: "50px",
+              paddingRight: "50px"
+            }}
+          >
+            <Navbar style={{ padding: "20px", backgroundColor: "#204f8c" }}>
+              <h2 onClick={this.routeChangeDash} style={{ color: "#ffffff" }}>
+                Dash Banking
+              </h2>
+              <h4
+                style={{
+                  paddingLeft: "40px",
+                  paddingTop: "8px",
+                  color: "#ffffff"
+                }}
+              >
+                Online Banking
+              </h4>
               <Nav className="ml-auto">
                 <Nav.Link style={lightNavStyle} onClick={this.routeChangeAcc}>
                   Accounts
@@ -65,9 +76,24 @@ class NavBar extends React.Component {
             </Navbar>
           </div>
         ) : (
-          <div style={divStyle}>
-            <h1>Welcome to Dash Banking</h1>
-            <h2>a Chase partner</h2>
+          <div
+            style={{
+              backgroundColor: "#204f8c",
+              marginLeft: "50px",
+              marginRight: "50px",
+              color: "#ffffff"
+            }}
+          >
+            <div
+              style={{
+                textAlign: "right",
+                padding: "20px",
+                backgroundColor: "#204f8c"
+              }}
+            >
+              <h2>Welcome to Dash Banking</h2>
+              <h4>a Chase partner</h4>
+            </div>
           </div>
         )}
       </div>
@@ -77,29 +103,55 @@ class NavBar extends React.Component {
   /**
    * Couldn't figure out how to pass var as parameter, so seperate routing per button for now
    */
+  routeChangeDash = () => {
+    if (this.props.location.state === undefined) {
+      window.alert("Error, not logged in!");
+    } else {
+      this.props.history.push({
+        pathname: "/dashboard",
+        state: { uID: this.props.location.state.uID }
+      });
+    }
+  };
   routeChangeAcc = () => {
-    this.props.history.push({
-      pathname: "/accounts",
-      state: { uID: this.props.location.state.uID }
-    });
+    if (this.props.location.state === undefined) {
+      window.alert("Error, not logged in!");
+    } else {
+      this.props.history.push({
+        pathname: "/accounts",
+        state: { uID: this.props.location.state.uID }
+      });
+    }
   };
   routeChangeTrans() {
-    this.props.history.push({
-      pathname: "/transfers",
-      state: { uID: this.props.location.state.uID }
-    });
+    if (this.props.location.state === undefined) {
+      window.alert("Error, not logged in!");
+    } else {
+      this.props.history.push({
+        pathname: "/transfers",
+        state: { uID: this.props.location.state.uID }
+      });
+    }
   }
   routeChangeBills() {
-    this.props.history.push({
-      pathname: "/bills",
-      state: { uID: this.props.location.state.uID }
-    });
+    if (this.props.location.state === undefined) {
+      window.alert("Error, not logged in!");
+    } else {
+      this.props.history.push({
+        pathname: "/bills",
+        state: { uID: this.props.location.state.uID }
+      });
+    }
   }
   routeChangeATMs() {
-    this.props.history.push({
-      pathname: "/atms",
-      state: { uID: this.props.location.state.uID }
-    });
+    if (this.props.location.state === undefined) {
+      window.alert("Error, not logged in!");
+    } else {
+      this.props.history.push({
+        pathname: "/atms",
+        state: { uID: this.props.location.state.uID }
+      });
+    }
   }
   routeChangeLogout = () => {
     this.props.history.push({

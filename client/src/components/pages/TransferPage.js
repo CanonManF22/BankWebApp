@@ -2,7 +2,7 @@ import React from "react";
 import Button from "react-bootstrap/Button";
 
 const divStyle = {
-  backgroundColor: "#4e74a6",
+  backgroundColor: "#c1ced9",
   padding: "50px",
   margin: "50px",
   marginTop: "0px"
@@ -12,7 +12,7 @@ class TransferPage extends React.Component {
   render() {
     return (
       <div style={divStyle}>
-        <h1 style={{ color: "#ffffff" }}>Placeholder [Transfers]</h1>
+        <h1 style={{ color: "#000000" }}>Placeholder [Transfers]</h1>
         <Button variant="primary" size="lg" block>
           Transfers Between Chase Banks
         </Button>

@@ -3,7 +3,7 @@ import LoginForm from "../forms/LoginForm";
 import { Link, withRouter } from "react-router-dom";
 
 const divStyle = {
-  backgroundColor: "#4e74a6",
+  backgroundColor: "#c1ced9",
   padding: "50px",
   margin: "50px",
   marginTop: "0px"
@@ -13,7 +13,7 @@ const LoginPage = () => (
   <div style={divStyle}>
     <h1
       style={{
-        color: "#ffffff",
+        color: "#000000",
         marginBottom: "20px"
       }}
     >
@@ -25,7 +25,7 @@ const LoginPage = () => (
     <Link
       to="/registration"
       style={{
-        color: "#ffffff",
+        color: "#000000",
         margin: "5px",
         textDecorationLine: "underline"
       }}

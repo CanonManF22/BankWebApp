@@ -8,14 +8,14 @@ const divStyle = {
   marginTop: "0px"
 };
 
-class BillPage extends React.Component {
+class DepositCheckPage extends React.Component {
   render() {
     return (
       <div style={divStyle}>
-        <h1 style={{ color: "#000000" }}>Placeholder Dashboard</h1>
+        <h1 style={{ color: "#000000" }}>Placeholder Deposit</h1>
       </div>
     );
   }
 }
 
-export default withRouter(BillPage);
+export default withRouter(DepositCheckPage);

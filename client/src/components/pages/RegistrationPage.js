@@ -3,7 +3,7 @@ import { Form, Button } from "semantic-ui-react";
 import { Link, withRouter } from "react-router-dom";
 
 const divStyle = {
-  backgroundColor: "#4e74a6",
+  backgroundColor: "#c1ced9",
   padding: "50px",
   margin: "50px",
   marginTop: "0px"
@@ -64,11 +64,11 @@ class RegistrationPage extends React.Component {
     const { data } = this.state;
     return (
       <div style={divStyle}>
-        <h1 style={{ color: "#ffffff" }}>Register a New User Account</h1>
+        <h1 style={{ color: "#000000" }}>Register a New User Account</h1>
 
         <Form onSubmit={this.handleSubmit}>
           <Form.Field>
-            <label htmlFor="username" style={{ color: "#dfedf2" }}>
+            <label htmlFor="username" style={{ color: "#000000" }}>
               Enter a Username
             </label>
             <input
@@ -81,7 +81,7 @@ class RegistrationPage extends React.Component {
             />
           </Form.Field>
           <Form.Field>
-            <label htmlFor="password" style={{ color: "#dfedf2" }}>
+            <label htmlFor="password" style={{ color: "#000000" }}>
               Enter a Password
             </label>
             <input
@@ -94,7 +94,7 @@ class RegistrationPage extends React.Component {
             />
           </Form.Field>
           <Form.Field>
-            <label htmlFor="passwordConfirm" style={{ color: "#dfedf2" }}>
+            <label htmlFor="passwordConfirm" style={{ color: "#000000" }}>
               Confirm Your Password
             </label>
             <input
@@ -107,7 +107,7 @@ class RegistrationPage extends React.Component {
             />
           </Form.Field>
           <Form.Field>
-            <label htmlFor="firstName" style={{ color: "#dfedf2" }}>
+            <label htmlFor="firstName" style={{ color: "#000000" }}>
               First Name
             </label>
             <input
@@ -120,7 +120,7 @@ class RegistrationPage extends React.Component {
             />
           </Form.Field>
           <Form.Field>
-            <label htmlFor="lastName" style={{ color: "#dfedf2" }}>
+            <label htmlFor="lastName" style={{ color: "#000000" }}>
               Last Name
             </label>
             <input
@@ -133,7 +133,7 @@ class RegistrationPage extends React.Component {
             />
           </Form.Field>
           <Form.Field>
-            <label htmlFor="email" style={{ color: "#dfedf2" }}>
+            <label htmlFor="email" style={{ color: "#000000" }}>
               Email
             </label>
             <input
@@ -146,7 +146,7 @@ class RegistrationPage extends React.Component {
             />
           </Form.Field>
           <Form.Field>
-            <label htmlFor="userType" style={{ color: "#dfedf2" }}>
+            <label htmlFor="userType" style={{ color: "#000000" }}>
               User Type
             </label>
             <select value={this.state.userType} onChange={this.handleChange}>
@@ -161,7 +161,7 @@ class RegistrationPage extends React.Component {
         <Link
           to="/"
           style={{
-            color: "#ffffff",
+            color: "#000000",
             margin: "5px",
             textDecorationLine: "underline"
           }}

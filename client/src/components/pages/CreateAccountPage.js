@@ -1,7 +1,8 @@
 import React from "react";
+import { withRouter } from "react-router-dom";
 
 const divStyle = {
-  backgroundColor: "#4e74a6",
+  backgroundColor: "#c1ced9",
   padding: "50px",
   margin: "50px",
   marginTop: "0px"
@@ -11,10 +12,10 @@ class CreateAccountPage extends React.Component {
   render() {
     return (
       <div style={divStyle}>
-        <h1 style={{ color: "#ffffff" }}>Placeholder [Create an Account]</h1>
+        <h1 style={{ color: "#000000" }}>Placeholder [Create an Account]</h1>
       </div>
     );
   }
 }
 
-export default CreateAccountPage;
+export default withRouter(CreateAccountPage);
