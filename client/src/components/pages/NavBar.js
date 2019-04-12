@@ -255,6 +255,7 @@ class NavBar extends React.Component {
     }
   }
   routeChangeLogout = () => {
+    window.alert("Please close your browser tab after logging out.");
     this.props.history.push({
       pathname: "/",
       state: {}
