@@ -13,6 +13,7 @@ import ManageAccountPage from "./components/pages/ManageAccountPage";
 import DepositCheckPage from "./components/pages/DepositCheckPage";
 import TransferChasePage from "./components/pages/TransferChasePage";
 import TransferOtherPage from "./components/pages/TransferOtherPage";
+import ReportsPage from "./components/pages/ReportsPage";
 
 const divStyle = {
   backgroundColor: "#dfedf2",
@@ -38,6 +39,7 @@ const App = () => (
     <Route path="/depositCheck" exact component={DepositCheckPage} />
     <Route path="/transferChase" exact component={TransferChasePage} />
     <Route path="/transferOther" exact component={TransferOtherPage} />
+    <Route path="/reports" exact component={ReportsPage} />
   </div>
 );
 

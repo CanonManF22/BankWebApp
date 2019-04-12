@@ -8,15 +8,14 @@ const divStyle = {
   marginTop: "0px"
 };
 
-class BillPage extends React.Component {
+class ReportsPage extends React.Component {
   render() {
     return (
       <div style={divStyle}>
-        <h1>Welcome!</h1>
-        <h1>Get Started by clicking one of the navigation buttons above.</h1>
+        <h1 style={{ color: "#000000" }}>Placeholder reports</h1>
       </div>
     );
   }
 }
 
-export default withRouter(BillPage);
+export default withRouter(ReportsPage);

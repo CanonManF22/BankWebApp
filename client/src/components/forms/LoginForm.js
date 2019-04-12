@@ -32,10 +32,10 @@ class LoginForm extends React.Component {
     this.setState({ responseToPost: response });
     if (response.Success) {
       const user_id = response.uID;
-      console.log('yo mofo ', user_id)
+      //push manager as well
       this.props.history.push({
         pathname: "/dashboard",
-        state: { uID: user_id }
+        state: { uID: user_id } //,manager
       });
     } else {
       window.alert(

@@ -26,6 +26,7 @@ class NavBar extends React.Component {
     this.routeChangeTrans = this.routeChangeTrans.bind(this);
     this.routeChangeBills = this.routeChangeBills.bind(this);
     this.routeChangeATMs = this.routeChangeATMs.bind(this);
+    this.routeChangeReports = this.routeChangeReports.bind(this);
   }
 
   render() {
@@ -34,47 +35,137 @@ class NavBar extends React.Component {
       this.props.location.pathname === "/" ||
       this.props.location.pathname === "/registration"
     );
+    const isManager = true; //this.props.state.manager
     return (
       <div>
         {displayNav ? (
-          <div
-            style={{
-              paddingLeft: "50px",
-              paddingRight: "50px"
-            }}
-          >
-            <Navbar style={{ padding: "20px", backgroundColor: "#204f8c" }}>
-              <h2 onClick={this.routeChangeDash} style={{ color: "#ffffff" }}>
-                Dash Banking
-              </h2>
-              <h4
+          isManager ? (
+            <div
+              style={{
+                paddingLeft: "50px",
+                paddingRight: "50px"
+              }}
+            >
+              <Navbar
                 style={{
-                  paddingLeft: "40px",
-                  paddingTop: "8px",
-                  color: "#ffffff"
+                  padding: "20px",
+                  paddingLeft: "30px",
+                  backgroundColor: "#204f8c"
                 }}
               >
-                Online Banking
-              </h4>
-              <Nav className="ml-auto">
-                <Nav.Link style={lightNavStyle} onClick={this.routeChangeAcc}>
-                  Accounts
-                </Nav.Link>
-                <Nav.Link style={lightNavStyle} onClick={this.routeChangeTrans}>
-                  Transfers
-                </Nav.Link>
-                <Nav.Link style={lightNavStyle} onClick={this.routeChangeBills}>
-                  Bills
-                </Nav.Link>
-                <Nav.Link style={lightNavStyle} onClick={this.routeChangeATMs}>
-                  ATMs
-                </Nav.Link>
-                <Nav.Link style={darkNavStyle} onClick={this.routeChangeLogout}>
-                  Logout
-                </Nav.Link>
-              </Nav>
-            </Navbar>
-          </div>
+                <h2
+                  onClick={this.routeChangeDash}
+                  style={{ cursor: "pointer", color: "#ffffff" }}
+                >
+                  Dash Banking
+                </h2>
+                <h4
+                  style={{
+                    paddingLeft: "40px",
+                    paddingTop: "8px",
+                    color: "#ffffff"
+                  }}
+                >
+                  Online Banking
+                </h4>
+                <Nav className="ml-auto">
+                  <Nav.Link style={lightNavStyle} onClick={this.routeChangeAcc}>
+                    Accounts
+                  </Nav.Link>
+                  <Nav.Link
+                    style={lightNavStyle}
+                    onClick={this.routeChangeTrans}
+                  >
+                    Transfers
+                  </Nav.Link>
+                  <Nav.Link
+                    style={lightNavStyle}
+                    onClick={this.routeChangeBills}
+                  >
+                    Bills
+                  </Nav.Link>
+                  <Nav.Link
+                    style={lightNavStyle}
+                    onClick={this.routeChangeReports}
+                  >
+                    Reports
+                  </Nav.Link>
+                  <Nav.Link
+                    style={lightNavStyle}
+                    onClick={this.routeChangeATMs}
+                  >
+                    ATMs
+                  </Nav.Link>
+                  <Nav.Link
+                    style={darkNavStyle}
+                    onClick={this.routeChangeLogout}
+                  >
+                    Logout
+                  </Nav.Link>
+                </Nav>
+              </Navbar>
+            </div>
+          ) : (
+            <div
+              style={{
+                paddingLeft: "50px",
+                paddingRight: "50px"
+              }}
+            >
+              <Navbar
+                style={{
+                  padding: "20px",
+                  paddingLeft: "30px",
+                  backgroundColor: "#204f8c"
+                }}
+              >
+                <h2
+                  onClick={this.routeChangeDash}
+                  style={{ cursor: "pointer", color: "#ffffff" }}
+                >
+                  Dash Banking
+                </h2>
+                <h4
+                  style={{
+                    paddingLeft: "40px",
+                    paddingTop: "8px",
+                    color: "#ffffff"
+                  }}
+                >
+                  Online Banking
+                </h4>
+                <Nav className="ml-auto">
+                  <Nav.Link style={lightNavStyle} onClick={this.routeChangeAcc}>
+                    Accounts
+                  </Nav.Link>
+                  <Nav.Link
+                    style={lightNavStyle}
+                    onClick={this.routeChangeTrans}
+                  >
+                    Transfers
+                  </Nav.Link>
+                  <Nav.Link
+                    style={lightNavStyle}
+                    onClick={this.routeChangeBills}
+                  >
+                    Bills
+                  </Nav.Link>
+                  <Nav.Link
+                    style={lightNavStyle}
+                    onClick={this.routeChangeATMs}
+                  >
+                    ATMs
+                  </Nav.Link>
+                  <Nav.Link
+                    style={darkNavStyle}
+                    onClick={this.routeChangeLogout}
+                  >
+                    Logout
+                  </Nav.Link>
+                </Nav>
+              </Navbar>
+            </div>
+          )
         ) : (
           <div
             style={{
@@ -139,6 +230,16 @@ class NavBar extends React.Component {
     } else {
       this.props.history.push({
         pathname: "/bills",
+        state: { uID: this.props.location.state.uID }
+      });
+    }
+  }
+  routeChangeReports() {
+    if (this.props.location.state === undefined) {
+      window.alert("Error, not logged in!");
+    } else {
+      this.props.history.push({
+        pathname: "/reports",
         state: { uID: this.props.location.state.uID }
       });
     }
