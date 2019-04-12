@@ -16,7 +16,7 @@ import TransferOtherPage from "./components/pages/TransferOtherPage";
 import ReportsPage from "./components/pages/ReportsPage";
 
 const divStyle = {
-  backgroundColor: "#dfedf2",
+  backgroundColor: "#ffffff",
   height: "150vh",
   width: "100vw",
   justifyContent: "center",
