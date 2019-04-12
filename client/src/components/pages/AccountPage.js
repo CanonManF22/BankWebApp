@@ -56,7 +56,6 @@ class Page extends React.Component {
     const user_id = this.props.location.state.uID;
     console.log(`http://localhost:8080/accounts/${user_id}`);
 
-    const data = "";
     const response = await fetch(`http://localhost:8080/accounts/${user_id}`, {
       mode: "cors",
       method: "GET",
@@ -111,10 +110,16 @@ class Page extends React.Component {
             <Nav.Link style={lightNavStyle} onClick={this.routeChangeCreateAcc}>
               Open A New Account
             </Nav.Link>
-            <Nav.Link style={lightNavStyle} onClick={this.routeManageAccs}>
+            <Nav.Link
+              style={lightNavStyle}
+              onClick={this.routeChangeManageAccs}
+            >
               Manage Existing Accounts
             </Nav.Link>
-            <Nav.Link style={lightNavStyle} onClick={this.routeDepositCheck}>
+            <Nav.Link
+              style={lightNavStyle}
+              onClick={this.routeChangeDepositCheck}
+            >
               Deposit Checks
             </Nav.Link>
           </Nav>
@@ -122,29 +127,33 @@ class Page extends React.Component {
       </div>
     ) : (
       <div style={divStyle}>
-        An Error Occurred. Please Logout and Login again.
+        <h3>No accounts for this user.</h3>
+        <Nav.Link style={lightNavStyle} onClick={this.routeChangeCreateAcc}>
+          Open A New Account
+        </Nav.Link>
       </div>
     );
   }
 
   routeChangeCreateAcc = () => {
-    console.log(this.props.location.state);
-    this.props.history.push({
-      pathname: "/createAccount",
-      state: { uID: this.props.location.state.uID }
-    });
+    if (this.props.location.state === undefined) {
+      window.alert("Error, not logged in!");
+    } else {
+      this.props.history.push({
+        pathname: "/createAccount",
+        state: { uID: this.props.location.state.uID }
+      });
+    }
   };
 
-  routeManageAccs = () => {
-    console.log(this.props.location.state);
+  routeChangeManageAccs = () => {
     this.props.history.push({
       pathname: "/manageAccount",
       state: { uID: this.props.location.state.uID }
     });
   };
 
-  routeDepositCheck = () => {
-    console.log(this.props.location.state);
+  routeChangeDepositCheck = () => {
     this.props.history.push({
       pathname: "/depositCheck",
       state: { uID: this.props.location.state.uID }

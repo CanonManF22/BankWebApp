@@ -36,7 +36,8 @@ class RegistrationPage extends React.Component {
           "Content-Type": "application/json"
         },
         body: JSON.stringify({ post: data })
-      }).then(window.alert("Registered!  Please Log In."));
+      });
+      if (response !== undefined) window.alert("Registered!  Please Log In.");
       this.routeToLogin();
     } else {
       window.alert("Passwords don't match or are too short!");

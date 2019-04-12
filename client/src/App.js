@@ -11,6 +11,8 @@ import ATMPage from "./components/pages/ATMPage";
 import CreateAccountPage from "./components/pages/CreateAccountPage";
 import ManageAccountPage from "./components/pages/ManageAccountPage";
 import DepositCheckPage from "./components/pages/DepositCheckPage";
+import TransferChasePage from "./components/pages/TransferChasePage";
+import TransferOtherPage from "./components/pages/TransferOtherPage";
 
 const divStyle = {
   backgroundColor: "#dfedf2",
@@ -34,6 +36,8 @@ const App = () => (
     <Route path="/createAccount" exact component={CreateAccountPage} />
     <Route path="/manageAccount" exact component={ManageAccountPage} />
     <Route path="/depositCheck" exact component={DepositCheckPage} />
+    <Route path="/transferChase" exact component={TransferChasePage} />
+    <Route path="/transferOther" exact component={TransferOtherPage} />
   </div>
 );
 

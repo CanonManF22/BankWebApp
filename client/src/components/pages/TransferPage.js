@@ -12,16 +12,50 @@ class TransferPage extends React.Component {
   render() {
     return (
       <div style={divStyle}>
-        <h1 style={{ color: "#000000" }}>Placeholder [Transfers]</h1>
-        <Button variant="primary" size="lg" block>
+        <h1 style={{ color: "#000000" }}>Initiate a Transfer</h1>
+        <hr
+          style={{
+            backgroundColor: "#72736e",
+            border: "none",
+            height: "4px",
+            color: "#72736e"
+          }}
+        />
+        <Button
+          onClick={this.routeChangeChaseTrans}
+          variant="primary"
+          size="lg"
+          block
+        >
           Transfers Between Chase Banks
         </Button>
-        <Button variant="secondary" size="lg" block>
+        <Button
+          onClick={this.routeChangeOtherTrans}
+          variant="secondary"
+          size="lg"
+          block
+        >
           Transfers Between Other Banks
         </Button>
       </div>
     );
   }
+
+  routeChangeChaseTrans = () => {
+    console.log(this.props.location.state);
+    this.props.history.push({
+      pathname: "/transferChase",
+      state: { uID: this.props.location.state.uID }
+    });
+  };
+
+  routeChangeOtherTrans = () => {
+    console.log(this.props.location.state);
+    this.props.history.push({
+      pathname: "/transferOther",
+      state: { uID: this.props.location.state.uID }
+    });
+  };
 }
 
 export default TransferPage;
