@@ -42,19 +42,25 @@ class TransferPage extends React.Component {
   }
 
   routeChangeChaseTrans = () => {
-    console.log(this.props.location.state);
-    this.props.history.push({
-      pathname: "/transferChase",
-      state: { uID: this.props.location.state.uID }
-    });
+    if (this.props.location.state === undefined) {
+      window.alert("Error, not logged in!");
+    } else {
+      this.props.history.push({
+        pathname: "/transferChase",
+        state: { uID: this.props.location.state.uID }
+      });
+    }
   };
 
   routeChangeOtherTrans = () => {
-    console.log(this.props.location.state);
-    this.props.history.push({
-      pathname: "/transferOther",
-      state: { uID: this.props.location.state.uID }
-    });
+    if (this.props.location.state === undefined) {
+      window.alert("Error, not logged in!");
+    } else {
+      this.props.history.push({
+        pathname: "/transferOther",
+        state: { uID: this.props.location.state.uID }
+      });
+    }
   };
 }
 
