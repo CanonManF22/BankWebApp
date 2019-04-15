@@ -109,8 +109,8 @@ class TransferChasePage extends React.Component {
       firstSplit[2] = firstSplit[2].substring(1);
       secondSplit[2] = secondSplit[2].substring(1);
       if (
-        firstSplit[2] < secondSplit[2] ||
-        firstSplit[2] < this.state.transferamt
+        parseFloat(firstSplit[2]) < parseFloat(secondSplit[2]) ||
+        parseFloat(firstSplit[2]) < parseFloat(this.state.transferamt)
       )
         window.alert("Error: Not Enough Funds");
       else {
@@ -148,6 +148,7 @@ class TransferChasePage extends React.Component {
               </option>
             ))}
           </Form.Control>
+          <br />
           <Form.Label style={{ fontSize: "150%" }}>Transfer To</Form.Label>
           <Form.Control as="select" onChange={this.handleChange2}>
             {this.state.accounts.map(acc => (
@@ -161,9 +162,10 @@ class TransferChasePage extends React.Component {
               </option>
             ))}
           </Form.Control>
+          <br />
           <Form.Label style={{ fontSize: "150%" }}>Amount ($USD)</Form.Label>
           <Form.Control
-            input-type="number"
+            type="number"
             value={this.state.transferamt}
             onChange={this.handleChangeNums}
           />
