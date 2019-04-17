@@ -25,18 +25,20 @@ class TransferOtherPage extends React.Component {
   //wait until info fetched
   componentDidMount() {
     this.fetchAccounts().then(res =>
-      this.setState({
-        accounts: res,
-        option1:
-          this.state.accounts[0].accType +
-          " - " +
-          this.state.accounts[0].accountID +
-          " - " +
-          "$" +
-          parseFloat(
-            Math.round(this.state.accounts[0].accBalance * 100) / 100
-          ).toFixed(2)
-      })
+      res
+        ? this.setState({
+            accounts: res,
+            option1:
+              this.state.accounts[0].accType +
+              " - " +
+              this.state.accounts[0].accountID +
+              " - " +
+              "$" +
+              parseFloat(
+                Math.round(this.state.accounts[0].accBalance * 100) / 100
+              ).toFixed(2)
+          })
+        : this.setState({ accounts: res, option1: null })
     );
   }
 
