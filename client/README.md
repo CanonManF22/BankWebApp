@@ -1,4 +1,4 @@
-NOTE: NEED TO COPY/PASTE EVERYTHING FROM CSS FOLDER INTO node_modules/react-bootstrap/dist/ IN ORDER TO RUN
+pushing all node_modules as stopgap because npm is annoying.
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
