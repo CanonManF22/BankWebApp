@@ -1,4 +1,7 @@
-pushing all node_modules as stopgap because npm is annoying.
+Note: Please do the following after cloning:
+npm install
+npm audit fix
+npm start
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
