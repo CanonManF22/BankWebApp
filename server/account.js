@@ -93,15 +93,17 @@ router.post('/:account_id/withdraw', (req, res) => {
 router.post('/:account_id/transfer', (req, res) => {
   const accountId = req.params.account_id;
   // TODO: check if uID is the same as account.uID
+  console.log(req.withdrawAmt);
   const { uID } = req;
   const { withdrawAmt } = req;
-  const sql = `UPDATE Accounts SET accBalance = accBalance - ${withdrawAmt} WHERE Accounts.uID = ${uID}`;
+  const { fromAcct } = req;
+  const { toAcct } = req;
+  // TODO: make transfer sql
+  const sql = `UPDATE Accounts SET accBalance = accBalance - ${withdrawAmt} WHERE Accounts.uID = ${uID} AND Accounts.ID = ${fromAcct}`;
   db.query(sql, (err, result) => {
     if (err) throw err;
+    res.send({ Success: true });
     console.log(result);
-    res.send({
-      Success: true
-    });
   });
 });
 

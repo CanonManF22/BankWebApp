@@ -86,7 +86,7 @@ class TransferOtherPage extends React.Component {
   };
 
   //submit transfer request
-  handleSubmit = () => {
+  handleSubmit = async e => {
     if (this.state.transferamt <= 0)
       window.alert("Error: Invalid transfer amount.");
     else {
@@ -97,6 +97,21 @@ class TransferOtherPage extends React.Component {
         window.alert("Error: Not Enough Funds");
       else {
         //do api call & redirect back to transfer page
+        console.log('fetching transfer', user_id)
+        console.log(this.state)
+        const { data } = this.state;
+        const user_id = this.props.location.state.uID;
+        const response = await fetch(`http://localhost:8080/:${user_id}/transfer`, {
+          mode: "cors",
+          method: "POST",
+          headers: {
+          "Content-Type": "application/json"
+          },
+          body: JSON.stringify({post: data})
+    }).then(res => res.json());
+        if (response.Success ){
+          console.log('transfer worked')
+        }
       }
     }
     console.log(this.state);
