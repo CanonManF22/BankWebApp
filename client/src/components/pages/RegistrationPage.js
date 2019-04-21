@@ -37,6 +37,7 @@ class RegistrationPage extends React.Component {
         },
         body: JSON.stringify({ post: data })
       });
+      console.log('asdsdasd response', response)
       if (response.Success) window.alert("Registered!  Please Log In.");
       if (!response.Success){
         window.alert("Username exists, please choose another!");
