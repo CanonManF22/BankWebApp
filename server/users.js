@@ -47,21 +47,21 @@ router.post('/register', (req, res) => {
               if (err2) throw err2;
               response = true;
             });
-          } else {
+          } else if (result.length > 0) {
             console.log('user existed');
           }
         });
       }
+      if (response) {
+        res.send({
+          Success: true
+        });
+      } else {
+        res.send({
+          Success: false
+        });
+      }
     });
-    if (response) {
-      res.send({
-        Success: true
-      });
-    } else {
-      res.send({
-        Success: false
-      });
-    }
   });
 });
 
