@@ -31,29 +31,41 @@ router.post('/register', (req, res) => {
   const { firstName } = post;
   const { lastName } = post;
   const { userType } = post;
-  // / Hash password before saving in database with bcrypt
-  bcrypt.genSalt(10, (err, salt) => {
-    if (err) throw err;
-    bcrypt.hash(password, salt, (err, hash) => {
-      if (err) {
-        console.log(err);
-      } else {
-        console.log(hash.length);
-        // const sql = `INSERT INTO Users(username, password, email, firstname, lastname) VALUES ('${username}', '${hash}', '${email}', '${firstName}', '${lastName}')`;
+  // check db for existing username
+  const sql = `SELECT * FROM Users WHERE username='${username}'`;
+  db.query(sql, (err, result) => {
+    if (result.length === 0) {
+      // / Hash password before saving in database with bcrypt
+      bcrypt.genSalt(10, (err, salt) => {
+        if (err) throw err;
+        bcrypt.hash(password, salt, (err, hash) => {
+          if (err) {
+            console.log(err);
+          } else {
+            console.log(hash.length);
+            // const sql = `INSERT INTO Users(username, password, email, firstname, lastname) VALUES ('${username}', '${hash}', '${email}', '${firstName}', '${lastName}')`;
 
-        const sql = `INSERT INTO bank.Users (username, password, email, firstname, lastname, userType)
+            const sql = `INSERT INTO bank.Users (username, password, email, firstname, lastname, userType)
                       SELECT * FROM (SELECT '${username}', '${hash}', '${email}', '${firstName}', '${lastName}', '${userType}') AS tmp
                       WHERE NOT EXISTS (
                       SELECT username, email FROM bank.Users WHERE username = '${username}' OR email = '${email}'
                       )LIMIT 1`;
-        console.log(sql);
-        const query = db.query(sql, (err, result) => {
-          if (err) throw err;
-          console.log('Authentication Worked');
-          res.send();
+            console.log(sql);
+            const query = db.query(sql, (err, result) => {
+              if (err) throw err;
+              console.log('Authentication Worked');
+              res.send({
+                Success: true
+              });
+            });
+          }
         });
-      }
-    });
+      });
+    } else {
+      res.send({
+        Success: false
+      });
+    }
   });
 });
 
