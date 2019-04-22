@@ -11,7 +11,7 @@ const divStyle = {
 
 class CreateAccountPage extends React.Component {
   state = {
-    bankType: "checking"
+    bankType: "Checking"
   };
 
   //save selected bank type to state upon change
@@ -20,9 +20,20 @@ class CreateAccountPage extends React.Component {
   };
 
   //send api to create account
-  handleSubmit = () => {
+  handleSubmit = async e => {
     console.log(this.state);
     //add api call here to create account
+    const uID = this.props.location.state.uID;
+    const { data } = this.state;
+    const response = await fetch(`http://localhost:8080/accounts/${uID}/open`, {
+      mode: "cors",
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(this.state)
+    });
+    console.log(response)
   };
 
   render() {
@@ -41,8 +52,8 @@ class CreateAccountPage extends React.Component {
         <Form.Group>
           <Form.Label style={{ fontSize: "150%" }}>Bank Type</Form.Label>
           <Form.Control as="select" onChange={this.handleChange}>
-            <option value="checking">Checking</option>
-            <option value="saving">Saving</option>
+            <option value="Checking">Checking</option>
+            <option value="Saving">Saving</option>
           </Form.Control>
           <Button
             onClick={this.handleSubmit}

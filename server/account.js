@@ -24,13 +24,12 @@ router.get('/:user_id', (req, res) => {
 });
 
 // open account
-router.post('/:account_id/open', (req, res) => {
+router.post('/:user_id/open', (req, res) => {
   // generate from front end
-  const accountId = req.params.account_id;
-  const { uID } = req;
-  const { accType } = req;
-
+  const uID = req.params.user_id;
+  const accType = req.body.bankType;
   const sql = `INSERT INTO Accounts(uID, accType, accBalance) VALUES ('${uID}', '${accType}', 0);`;
+  console.log(sql);
   db.query(sql, (err, result) => {
     if (err) throw err;
     console.log(result);
@@ -41,13 +40,12 @@ router.post('/:account_id/open', (req, res) => {
 });
 
 // close account
-router.put('/:account_id/close', (req, res) => {
-  const accountId = req.params.account_id;
+router.put('/:user_id/close', (req, res) => {
+  const { uID } = req.params;
   // TODO: check if uID is the same as account.uID
-  const { uID } = req;
-  const { accType } = req;
-
-  const sql = `DELETE FROM Accounts WHERE accountID = ${accountId}`;
+  const { accType } = req.bankType;
+  console.log(accType);
+  const sql = `DELETE FROM Accounts WHERE accountID = ${user_id}`;
   db.query(sql, (err, result) => {
     if (err) throw err;
     console.log(result);
