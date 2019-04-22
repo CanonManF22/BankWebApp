@@ -41,11 +41,10 @@ router.post('/:user_id/open', (req, res) => {
 
 // close account
 router.put('/:user_id/close', (req, res) => {
-  const { uID } = req.params;
-  // TODO: check if uID is the same as account.uID
-  const { accType } = req.bankType;
-  console.log(accType);
-  const sql = `DELETE FROM Accounts WHERE accountID = ${user_id}`;
+  // generate from front end
+  const uID = req.params.user_id;
+  const sql = `DELETE FROM Accounts WHERE accountID = ${uID}`;
+  console.log(sql);
   db.query(sql, (err, result) => {
     if (err) throw err;
     console.log(result);
