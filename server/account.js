@@ -90,8 +90,8 @@ router.post('/:user_id/transfer', (req, res) => {
   // TODO: check if uID is the same as account.uID
   const { uID } = req.body;
   const withdrawAmt = req.body.transferamt;
-  const fromAcct = req.body.accounts[0].accountID;
-  const toAcct = req.body.accounts[1].accountID;
+  const fromAcct = req.body.accounts[1].accountID;
+  const toAcct = req.body.accounts[0].accountID;
 
   console.log(uID, withdrawAmt, fromAcct, toAcct);
   // TODO: make transfer sql
