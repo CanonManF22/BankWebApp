@@ -100,7 +100,8 @@ class TransferChasePage extends React.Component {
   };
 
   //submit transfer request
-  handleSubmit = () => {
+  handleSubmit = async e => {
+    const uID = this.props.location.state.uID;
     if (this.state.option1 === this.state.option2)
       window.alert("Error: Same Account Chosen.  Choose a different account.");
     else if (this.state.transferamt <= 0)
@@ -116,7 +117,15 @@ class TransferChasePage extends React.Component {
       )
         window.alert("Error: Not Enough Funds");
       else {
-        //do api call & redirect back to transfer page
+        const response = await fetch(`http://localhost:8080/accounts/${uID}/transfer`, {
+          mode: "cors",
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(this.state)
+        });
+        console.log(response)
       }
     }
     console.log(this.state);

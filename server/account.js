@@ -24,13 +24,12 @@ router.get('/:user_id', (req, res) => {
 });
 
 // open account
-router.post('/:account_id/open', (req, res) => {
+router.post('/:user_id/open', (req, res) => {
   // generate from front end
-  const accountId = req.params.account_id;
-  const { uID } = req;
-  const { accType } = req;
-
+  const uID = req.params.user_id;
+  const accType = req.body.bankType;
   const sql = `INSERT INTO Accounts(uID, accType, accBalance) VALUES ('${uID}', '${accType}', 0);`;
+  console.log(sql);
   db.query(sql, (err, result) => {
     if (err) throw err;
     console.log(result);
@@ -41,13 +40,11 @@ router.post('/:account_id/open', (req, res) => {
 });
 
 // close account
-router.put('/:account_id/close', (req, res) => {
-  const accountId = req.params.account_id;
-  // TODO: check if uID is the same as account.uID
-  const { uID } = req;
-  const { accType } = req;
-
-  const sql = `DELETE FROM Accounts WHERE accountID = ${accountId}`;
+router.put('/:user_id/close', (req, res) => {
+  // generate from front end
+  const uID = req.params.user_id;
+  const sql = `DELETE FROM Accounts WHERE accountID = ${uID}`;
+  console.log(sql);
   db.query(sql, (err, result) => {
     if (err) throw err;
     console.log(result);
@@ -89,20 +86,27 @@ router.post('/:account_id/withdraw', (req, res) => {
   });
 });
 
-// transfer TODO
-router.post('/:account_id/transfer', (req, res) => {
-  const accountId = req.params.account_id;
+router.post('/:user_id/transfer', (req, res) => {
   // TODO: check if uID is the same as account.uID
-  console.log(req.withdrawAmt);
-  const { uID } = req;
-  const { withdrawAmt } = req;
-  const { fromAcct } = req;
-  const { toAcct } = req;
+  const { uID } = req.body;
+  const withdrawAmt = req.body.transferamt;
+  const fromAcct = req.body.accounts[0].accountID;
+  const toAcct = req.body.accounts[1].accountID;
+
+  console.log(uID, withdrawAmt, fromAcct, toAcct);
   // TODO: make transfer sql
-  const sql = `UPDATE Accounts SET accBalance = accBalance - ${withdrawAmt} WHERE Accounts.uID = ${uID} AND Accounts.ID = ${fromAcct}`;
+  const sql = `UPDATE Accounts SET accBalance = accBalance - ${withdrawAmt} WHERE Accounts.uID = ${uID} AND Accounts.accountID = ${fromAcct}`;
   db.query(sql, (err, result) => {
     if (err) throw err;
-    res.send({ Success: true });
+    console.log(result);
+  });
+
+  const sql1 = `UPDATE Accounts SET accBalance = accBalance + ${withdrawAmt} WHERE Accounts.uID = ${uID} AND Accounts.accountID = ${toAcct}`;
+  db.query(sql1, (err, result) => {
+    if (err) throw err;
+    res.send({
+      Success: true
+    });
     console.log(result);
   });
 });
