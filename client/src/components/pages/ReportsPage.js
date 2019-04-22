@@ -49,6 +49,7 @@ class ReportsPage extends React.Component {
     this.setState({ accounts: response });
     if (response.length < 1) {
       window.alert("No accounts for this user");
+      return [{ accType: "N/A", accountID: "N/A", accBalance: "N/A" }];
     } else {
       return response;
     }
@@ -61,16 +62,18 @@ class ReportsPage extends React.Component {
   //When account number is entered and submitted
   handleSubmit = () => {
     //fetch accounts
-    //this.setState({ accounts: fetchInfo() });
+    this.setState({ accounts: this.fetchInfo() });
+    console.log(this.state.accounts);
 
     //debug version
+    /*
     this.setState({
       accounts: [{ accType: "test", accountID: "0", accBalance: "1" }]
-    });
+    }); */
   };
 
   render() {
-    return (
+    return this.state.accounts.length ? (
       <div style={divStyle}>
         <h1 style={{ color: "#000000" }}>Generate a Report</h1>
         <hr
@@ -117,6 +120,41 @@ class ReportsPage extends React.Component {
             </h3>
           </div>
         ))}
+      </div>
+    ) : (
+      <div style={divStyle}>
+        <h1 style={{ color: "#000000" }}>Generate a Report</h1>
+        <hr
+          style={{
+            backgroundColor: "#72736e",
+            border: "none",
+            height: "4px",
+            color: "#72736e"
+          }}
+        />
+        <Form style={{ paddingBottom: "20px" }}>
+          <Form.Label>Account Number</Form.Label>
+          <Form.Control
+            id="user_id_search"
+            name="user_id_search"
+            placeholder="123456789"
+            type="number"
+            onChange={this.onChange}
+          />
+          <Button
+            onClick={this.handleSubmit}
+            primary
+            style={{ marginTop: "5px" }}
+          >
+            Generate Report
+          </Button>
+        </Form>
+        <h3>
+          {this.state.user_id_search
+            ? "User ID: " + this.state.user_id_search
+            : ""}
+        </h3>
+        <h3 style={divStyleLight}>No accounts found.</h3>
       </div>
     );
   }

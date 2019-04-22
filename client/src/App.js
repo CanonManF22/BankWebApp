@@ -3,7 +3,7 @@ import { Route, withRouter } from "react-router-dom";
 import RegPage from "./components/pages/RegistrationPage";
 import LoginPage from "./components/pages/LoginPage";
 import NavBar from "./components/pages/NavBar";
-import Dashboard from "./components/pages/Dashboard";
+import DashboardPage from "./components/pages/Dashboard";
 import AccountPage from "./components/pages/AccountPage";
 import TransferPage from "./components/pages/TransferPage";
 import BillPage from "./components/pages/BillPage";
@@ -28,7 +28,7 @@ const App = () => (
     <NavBar />
     <Route path="/" exact component={LoginPage} />
     <Route path="/registration" exact component={RegPage} />
-    <Route path="/dashboard" exact component={Dashboard} />
+    <Route path="/dashboard" exact component={DashboardPage} />
     <Route path="/navbar" exact component={NavBar} />
     <Route path="/accounts" exact component={AccountPage} />
     <Route path="/transfers" exact component={TransferPage} />
