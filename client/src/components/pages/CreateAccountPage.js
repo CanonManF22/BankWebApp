@@ -1,4 +1,5 @@
 import React from "react";
+import { Form, Button } from "react-bootstrap";
 import { withRouter } from "react-router-dom";
 
 const divStyle = {
@@ -9,10 +10,48 @@ const divStyle = {
 };
 
 class CreateAccountPage extends React.Component {
+  state = {
+    bankType: "checking"
+  };
+
+  //save selected bank type to state upon change
+  handleChange = e => {
+    this.setState({ bankType: e.target.value });
+  };
+
+  //send api to create account
+  handleSubmit = () => {
+    console.log(this.state);
+    //add api call here to create account
+  };
+
   render() {
     return (
       <div style={divStyle}>
-        <h1 style={{ color: "#000000" }}>Placeholder [Create an Account]</h1>
+        <h1 style={{ color: "#000000" }}>Create a New Bank Account</h1>
+        <hr
+          style={{
+            backgroundColor: "#72736e",
+            border: "none",
+            height: "4px",
+            color: "#72736e"
+          }}
+        />
+
+        <Form.Group>
+          <Form.Label style={{ fontSize: "150%" }}>Bank Type</Form.Label>
+          <Form.Control as="select" onChange={this.handleChange}>
+            <option value="checking">Checking</option>
+            <option value="saving">Saving</option>
+          </Form.Control>
+          <Button
+            onClick={this.handleSubmit}
+            primary
+            style={{ marginTop: "5px" }}
+          >
+            Create Account
+          </Button>
+        </Form.Group>
       </div>
     );
   }
