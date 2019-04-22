@@ -27,13 +27,27 @@ class CreateAccountPage extends React.Component {
     const { data } = this.state;
     const response = await fetch(`http://localhost:8080/accounts/${uID}/open`, {
       mode: "cors",
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify(this.state)
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(this.state)
     });
+<<<<<<< HEAD
     console.log('response', response)
+=======
+    console.log(response);
+    /* untested front end response
+    if (response.Success) { //
+      window.alert("Successfully created account!");
+      this.props.history.push({
+        pathname: "/accounts",
+        state: { uID: uID } //,manager
+      });
+    } else {
+      window.alert("Error creating account");
+    } */
+>>>>>>> c2caacce3a11bcf69873048696817ee663cc94e7
   };
 
   render() {
