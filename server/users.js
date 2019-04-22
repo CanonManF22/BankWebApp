@@ -84,21 +84,27 @@ router.post('/login', (req, res) => {
   const sql = `SELECT * FROM Users WHERE username='${username}'`;
   db.query(sql, (err, result) => {
     if (err) throw err;
-    const hashed = result[0].password;
-    bcrypt.compare(password, hashed, (error, result1) => {
-      if (error) throw error;
-      if (!result1) {
-        res.send({
-          Success: false
-        });
-      }
-      if (result1) {
-        res.send({
-          Success: true,
-          uID: result[0].uID
-        });
-      }
-    });
+    if (result.length === 0) {
+      res.send({
+        Success: false
+      });
+    } else {
+      const hashed = result[0].password;
+      bcrypt.compare(password, hashed, (error, result1) => {
+        if (error) throw error;
+        if (!result1) {
+          res.send({
+            Success: false
+          });
+        }
+        if (result1) {
+          res.send({
+            Success: true,
+            uID: result[0].uID
+          });
+        }
+      });
+    }
   });
 });
 
