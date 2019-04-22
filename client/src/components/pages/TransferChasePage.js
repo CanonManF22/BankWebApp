@@ -112,20 +112,33 @@ class TransferChasePage extends React.Component {
       firstSplit[2] = firstSplit[2].substring(1);
       secondSplit[2] = secondSplit[2].substring(1);
       if (
-        parseFloat(firstSplit[2]) < parseFloat(secondSplit[2]) ||
-        parseFloat(firstSplit[2]) < parseFloat(this.state.transferamt)
+        parseFloat(firstSplit[2]) <= parseFloat(secondSplit[2]) ||
+        parseFloat(firstSplit[2]) <= parseFloat(this.state.transferamt)
       )
         window.alert("Error: Not Enough Funds");
       else {
-        const response = await fetch(`http://localhost:8080/accounts/${uID}/transfer`, {
-          mode: "cors",
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify(this.state)
-        });
-        console.log(response)
+        const response = await fetch(
+          `http://localhost:8080/accounts/${uID}/transfer`,
+          {
+            mode: "cors",
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json"
+            },
+            body: JSON.stringify(this.state)
+          }
+        );
+        console.log(response);
+        /* Untested frontend response
+        if (response.Success) {
+          window.alert("Transfer successfully processed.");
+          this.props.history.push({
+            pathname: "/transfers",
+            state: { uID: uID } //,manager
+          });
+        } else {
+          window.alert("Error during transfer.");
+        } */
       }
     }
     console.log(this.state);
