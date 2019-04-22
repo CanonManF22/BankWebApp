@@ -104,10 +104,27 @@ router.post('/:user_id/transfer', (req, res) => {
   const sql1 = `UPDATE Accounts SET accBalance = accBalance + ${withdrawAmt} WHERE Accounts.uID = ${uID} AND Accounts.accountID = ${toAcct}`;
   db.query(sql1, (err, result) => {
     if (err) throw err;
-    res.send({
-      Success: true
-    });
+
     console.log(result);
+  });
+  res.send('Hello World');
+});
+
+router.post('/:user_id/transferExternal', (req, res) => {
+  const { uID } = req.body;
+  const withdrawAmt = req.body.transferamt;
+  const acctID = req.body.option1.split(' - ')[1];
+
+  // TODO: make transfer sql
+  const sql = `UPDATE Accounts SET accBalance = accBalance - ${withdrawAmt} WHERE Accounts.uID = ${uID} AND Accounts.accountID = ${acctID}`;
+  db.query(sql, (err, result) => {
+    if (err) throw err;
+    console.log('fuck yeah');
+    console.log(result);
+  });
+
+  res.send({
+    Success: true
   });
 });
 

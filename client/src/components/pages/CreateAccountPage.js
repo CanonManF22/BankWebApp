@@ -33,7 +33,7 @@ class CreateAccountPage extends React.Component {
         },
         body: JSON.stringify(this.state)
     });
-    console.log(response)
+    console.log('response', response)
   };
 
   render() {
