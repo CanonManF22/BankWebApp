@@ -33,9 +33,6 @@ class CreateAccountPage extends React.Component {
       },
       body: JSON.stringify(this.state)
     });
-<<<<<<< HEAD
-    console.log('response', response)
-=======
     console.log(response);
     /* untested front end response
     if (response.Success) { //
@@ -47,7 +44,6 @@ class CreateAccountPage extends React.Component {
     } else {
       window.alert("Error creating account");
     } */
->>>>>>> c2caacce3a11bcf69873048696817ee663cc94e7
   };
 
   render() {
