@@ -56,11 +56,12 @@ router.put('/:user_id/close', (req, res) => {
 
 // deposit
 router.post('/:account_id/deposit', (req, res) => {
-  const accountId = req.params.account_id;
-  // TODO: check if uID is the same as account.uID
-  const { uID } = req;
-  const { depositAmt } = req;
-  const sql = `UPDATE Accounts SET accBalance = accBalance + ${depositAmt} WHERE Accounts.uID = ${uID}`;
+
+  const { uID } = req.body;
+  const depositAmt = req.body.depositAmt;
+  const toAcct = req.body.accounts[0].accountID;
+
+  const sql = `UPDATE Accounts SET accBalance = accBalance + ${depositAmt} WHERE Accounts.uID = ${uID} AND Accounts.accountID = ${toAcct}`;
   db.query(sql, (err, result) => {
     if (err) throw err;
     console.log(result);
