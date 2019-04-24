@@ -56,9 +56,8 @@ router.put('/:user_id/close', (req, res) => {
 
 // deposit
 router.post('/:account_id/deposit', (req, res) => {
-
   const { uID } = req.body;
-  const depositAmt = req.body.depositAmt;
+  const { depositAmt } = req.body;
   const toAcct = req.body.accounts[0].accountID;
 
   const sql = `UPDATE Accounts SET accBalance = accBalance + ${depositAmt} WHERE Accounts.uID = ${uID} AND Accounts.accountID = ${toAcct}`;
@@ -91,22 +90,24 @@ router.post('/:user_id/transfer', (req, res) => {
   // TODO: check if uID is the same as account.uID
   const { uID } = req.body;
   const withdrawAmt = req.body.transferamt;
-  const fromAcct = req.body.accounts[1].accountID;
-  const toAcct = req.body.accounts[0].accountID;
+  const fromAcct = req.body.accounts[0].accountID;
+  const toAcct = req.body.accounts[1].accountID;
 
   console.log(uID, withdrawAmt, fromAcct, toAcct);
   // TODO: make transfer sql
   const sql = `UPDATE Accounts SET accBalance = accBalance - ${withdrawAmt} WHERE Accounts.uID = ${uID} AND Accounts.accountID = ${fromAcct}`;
+  console.log(sql);
   db.query(sql, (err, result) => {
     if (err) throw err;
-    console.log(result);
+    console.log('withdrew amount');
   });
 
   const sql1 = `UPDATE Accounts SET accBalance = accBalance + ${withdrawAmt} WHERE Accounts.uID = ${uID} AND Accounts.accountID = ${toAcct}`;
+  console.log(sql1);
   db.query(sql1, (err, result) => {
     if (err) throw err;
 
-    console.log(result);
+    console.log('transfered amount');
   });
   res.send('Hello World');
 });
