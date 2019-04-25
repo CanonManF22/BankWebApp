@@ -3,10 +3,6 @@ const express = require('express');
 const router = express.Router();
 const db = require('./db');
 
-// router.get('/', (req, res) => {
-//   console.log('request to /');
-// });
-
 // TODO:
 // get all accounts of a user
 router.get('/:user_id', (req, res) => {
@@ -59,7 +55,7 @@ router.post('/:account_id/deposit', (req, res) => {
   const { uID } = req.body;
   const { depositAmt } = req.body;
   const toAcct = req.body.accounts[0].accountID;
-  var date = new Date();
+  const date = new Date();
 
   const sql = `UPDATE Accounts SET accBalance = accBalance + ${depositAmt} WHERE Accounts.uID = ${uID} AND Accounts.accountID = ${toAcct}`;
   db.query(sql, (err, result) => {
@@ -68,8 +64,7 @@ router.post('/:account_id/deposit', (req, res) => {
     /*
     res.send({
       Success: true
-    });*/
-
+    }); */
   });
 
   const sqlt = `INSERT INTO Transactions(uID, originAccountID, originAccountID, date, payment,type) VALUES ('${uID}', '${toAcct}', '${toAcct}', '${date}', ${depositAmt}, 'deposit');`;
@@ -79,8 +74,8 @@ router.post('/:account_id/deposit', (req, res) => {
     res.send({
       Success: true
     });
-});
   });
+});
 
 // withdraw
 router.post('/:account_id/withdraw', (req, res) => {
@@ -122,8 +117,8 @@ router.post('/:user_id/transfer', (req, res) => {
     /*
     res.send({
       Success: true
-    });*/
-});
+    }); */
+  });
 
   const sql1 = `UPDATE Accounts SET accBalance = accBalance + ${withdrawAmt} WHERE Accounts.uID = ${uID} AND Accounts.accountID = ${toAcct}`;
   console.log(sql1);
@@ -140,8 +135,8 @@ router.post('/:user_id/transfer', (req, res) => {
     /*
     res.send({
       Success: true
-    });*/
-});
+    }); */
+  });
   res.send('Hello World');
 });
 

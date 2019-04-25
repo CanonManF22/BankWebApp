@@ -36,7 +36,7 @@ class RegistrationPage extends React.Component {
           "Content-Type": "application/json"
         },
         body: JSON.stringify({ post: data })
-      });
+      }).then(res=>res.json());
       console.log('asdsdasd response', response)
       if (response.Success) window.alert("Registered!  Please Log In.");
       if (!response.Success){

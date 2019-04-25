@@ -47,6 +47,7 @@ class ReportsPage extends React.Component {
       }
     }).then(res => res.json());
     this.setState({ accounts: response });
+    console.log(response)
     if (response.length < 1) {
       window.alert("No accounts for this user");
       return [{ accType: "N/A", accountID: "N/A", accBalance: "N/A" }];
