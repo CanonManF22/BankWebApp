@@ -1,6 +1,5 @@
 import React from "react";
 import { withRouter } from "react-router-dom";
-import Navbar from "react-bootstrap/Navbar";
 import Nav from "react-bootstrap/Nav";
 
 const divStyle = {
@@ -16,7 +15,7 @@ const deleteBtnStyle = {
   paddingLeft: "20px",
   paddingRight: "20px",
   color: "#ffffff",
-  marginLeft: '20px'
+  marginLeft: "20px"
 };
 
 const divStyleLight = {
@@ -28,7 +27,6 @@ const divStyleLight = {
   margin: "5px",
   color: "#000000"
 };
-
 
 class ManageAccountPage extends React.Component {
   constructor(props) {
@@ -79,15 +77,18 @@ class ManageAccountPage extends React.Component {
     }
   };
 
-  deleteAccount = async (accountID) => {
+  deleteAccount = async accountID => {
     //const user_id = this.props.location.state.uID;
-    const response = await fetch(`http://localhost:8080/accounts/${accountID}/close`, {
-      mode: "cors",
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json"
+    const response = await fetch(
+      `http://localhost:8080/accounts/${accountID}/close`,
+      {
+        mode: "cors",
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json"
+        }
       }
-    }).then(res => res.json());
+    ).then(res => res.json());
 
     console.log(response);
 
@@ -116,7 +117,12 @@ class ManageAccountPage extends React.Component {
               {acc.accType + " - " + acc.accountID}
             </h2>
             <h3 style={{ float: "right" }}>
-              <Nav.Link style={deleteBtnStyle} onClick={() => { this.deleteAccount(acc.accountID); }}>
+              <Nav.Link
+                style={deleteBtnStyle}
+                onClick={() => {
+                  this.deleteAccount(acc.accountID);
+                }}
+              >
                 Delete
               </Nav.Link>
             </h3>

@@ -24,7 +24,6 @@ class CreateAccountPage extends React.Component {
     console.log(this.state);
     //add api call here to create account
     const uID = this.props.location.state.uID;
-    const { data } = this.state;
     const response = await fetch(`http://localhost:8080/accounts/${uID}/open`, {
       mode: "cors",
       method: "POST",
