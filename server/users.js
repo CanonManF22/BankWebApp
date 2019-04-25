@@ -32,6 +32,7 @@ router.post('/register', (req, res) => {
   const { lastName } = post;
   const { userType } = post;
   let response = false;
+  console.log(username, password, email, firstName, lastName, userType);
   // / Hash password before saving in database with bcrypt
   bcrypt.genSalt(10, (err, salt) => {
     if (err) throw err;
@@ -41,24 +42,23 @@ router.post('/register', (req, res) => {
         const user_check = `SELECT * FROM Users WHERE username='${username}'`;
         db.query(user_check, (err1, result) => {
           if (err1) throw err1;
+          console.log(result);
           if (result.length === 0) {
-            const sql = `INSERT INTO Users(username, password, email, firstname, lastname) VALUES ('${username}', '${hash}', '${email}', '${firstName}', '${lastName}')`;
+            const sql = `INSERT INTO Users(username, password, email, firstname, lastname, usertype) VALUES ('${username}', '${hash}', '${email}', '${firstName}', '${lastName}', '${userType}')`;
             db.query(sql, (err2, result1) => {
               if (err2) throw err2;
               response = true;
+              console.log('registration successful');
+              res.send({
+                Success: true
+              });
             });
           } else if (result.length > 0) {
             console.log('user existed');
+            res.send({
+              Success: false
+            });
           }
-        });
-      }
-      if (response) {
-        res.send({
-          Success: true
-        });
-      } else {
-        res.send({
-          Success: false
         });
       }
     });
