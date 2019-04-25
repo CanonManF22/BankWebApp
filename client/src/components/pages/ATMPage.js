@@ -2,7 +2,7 @@ import React from "react";
 import Geocode from "react-geocode";
 import ReactDOM from "react-dom";
 import { Form, Button } from "react-bootstrap";
-import { Map, GoogleApiWrapper } from "google-maps-react";
+import { Map, GoogleApiWrapper /*, InfoWindow */ } from "google-maps-react";
 
 const divStyle = {
   position: "relative",
@@ -26,7 +26,7 @@ export class MapContainer extends React.Component {
       long: -121.881244
     };
     // set Google Maps Geocoding API for purposes of quota management. Its optional but recommended.
-    Geocode.setApiKey("AIzaSyDSbKUp1Xu9yP6FUwvjcj701S_NtR0N1Po");
+    Geocode.setApiKey("AIzaSyCvilfCSc7PaEWWpRPNbpalhQ7XGRt18gM");
     // Enable or disable logs. Its optional.
     Geocode.enableDebug();
   }
@@ -45,6 +45,8 @@ export class MapContainer extends React.Component {
         zoom: 14
       };
       this.map = new maps.Map(node, mapConfig);
+      //this.infowindow = new maps.InfoWindow();
+      //this.infowindow.setContent({});
     } else {
       window.alert("Error, couldn't reach Google Maps.");
     }
@@ -52,15 +54,22 @@ export class MapContainer extends React.Component {
 
   // Get latidude & longitude from address and set gmaps
   handleSubmit = () => {
+    // google is available
+    const { google } = this.props;
+    const maps = google.maps;
+
+    const mapRef = this.refs.map;
+    const node = ReactDOM.findDOMNode(mapRef);
+
     let tempAddr =
       this.state.address +
-      "," +
+      " " +
       this.state.address2 +
-      "," +
+      ", " +
       this.state.city +
       "," +
       this.state.statename +
-      "," +
+      " " +
       this.state.zip;
     Geocode.fromAddress(tempAddr).then(
       response => {
@@ -73,6 +82,17 @@ export class MapContainer extends React.Component {
         };
         this.map = new maps.Map(node, mapConfig);
 
+        //nearby search for chase
+        const request = {
+          location: latLong,
+          radius: "1500",
+          name: "Chase",
+          type: ["atm"]
+        };
+
+        const service = new google.maps.places.PlacesService(this.map);
+        service.nearbySearch(request, this.callback);
+
         console.log(latLong);
       },
       error => {
@@ -80,27 +100,33 @@ export class MapContainer extends React.Component {
         console.error(error);
       }
     );
+  };
 
-    // google is available
+  //function to process search results
+  callback = (results, status) => {
     const { google } = this.props;
-    const maps = google.maps;
+    if (status == google.maps.places.PlacesServiceStatus.OK) {
+      for (var i = 0; i < results.length; i++) {
+        //var place = results[i];
+        console.log(results[i]);
+        this.createMarker(results[i]);
+      }
+    }
+  };
 
-    const mapRef = this.refs.map;
-    const node = ReactDOM.findDOMNode(mapRef);
+  //creates markers on the map
+  createMarker = place => {
+    const { google } = this.props;
+    const marker = new google.maps.Marker({
+      map: this.map,
+      position: place.geometry.location
+    });
 
-    /* working test coords
-    const templat = 35.658072;
-    const templng = 139.70164;
-
-    const mapConfig = {
-      center: {
-        lat: parseFloat(templat),
-        lng: parseFloat(templng)
-      },
-      zoom: 14
-    };
-    this.map = new maps.Map(node, mapConfig);
-    */
+    /* clicking doesnt work atm
+    google.maps.event.addListener(marker, "click", () => {
+      this.infowindow.setContent(place.name);
+      this.infowindow.open(this.map, this);
+    }); */
   };
 
   handleChangeAddr = e => {
@@ -190,13 +216,15 @@ export class MapContainer extends React.Component {
             </Button>
           </Form.Row>
         </Form.Group>
-        <Map ref={"map"} google={this.props.google} zoom={14} />
+        <Map ref={"map"} google={this.props.google} zoom={14}>
+          {/*<InfoWindow ref={"infowindow"} onClose={this.onInfoWindowClose} >*/}
+        </Map>
       </div>
     );
   }
 }
 
 export default GoogleApiWrapper({
-  apiKey: "AIzaSyDSbKUp1Xu9yP6FUwvjcj701S_NtR0N1Po"
+  apiKey: "AIzaSyCvilfCSc7PaEWWpRPNbpalhQ7XGRt18gM"
 })(MapContainer);
 //"AIzaSyCh7Yb-Ie1DZz-xAPJONadWMajKfmZOJxo"
