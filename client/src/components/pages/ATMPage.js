@@ -2,11 +2,11 @@ import React from "react";
 import Geocode from "react-geocode";
 import ReactDOM from "react-dom";
 import { Form, Button } from "react-bootstrap";
-import { Map, GoogleApiWrapper /*, InfoWindow */ } from "google-maps-react";
+import { GoogleApiWrapper } from "google-maps-react";
 
 const divStyle = {
   position: "relative",
-  height: "167vh",
+  height: "2200px",
   backgroundColor: "#c1ced9",
   padding: "50px",
   margin: "50px",
@@ -85,7 +85,7 @@ export class MapContainer extends React.Component {
         //nearby search for chase
         const request = {
           location: latLong,
-          radius: "1500",
+          radius: "10000",
           name: "Chase",
           type: ["atm"]
         };
@@ -216,9 +216,15 @@ export class MapContainer extends React.Component {
             </Button>
           </Form.Row>
         </Form.Group>
-        <Map ref={"map"} google={this.props.google} zoom={14}>
+        <div
+          className="map"
+          ref={"map"}
+          google={this.props.google}
+          zoom={14}
+          style={{ width: "100%", height: "85%" }}
+        >
           {/*<InfoWindow ref={"infowindow"} onClose={this.onInfoWindowClose} >*/}
-        </Map>
+        </div>
       </div>
     );
   }
