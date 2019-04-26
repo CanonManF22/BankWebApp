@@ -30,11 +30,8 @@ class LoginForm extends React.Component {
       body: JSON.stringify({ post: data })
     }).then(res => res.json());
     this.setState({ responseToPost: response });
-    console.log(response.Success);
-
-    //local manager testing
-    const isManager = true;
-
+    console.log(response);
+    const isManager = response.isManager;
     if (response.Success) {
       const user_id = response.uID;
       this.props.history.push({

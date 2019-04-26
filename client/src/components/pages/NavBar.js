@@ -38,7 +38,7 @@ class NavBar extends React.Component {
     let isManager = false;
     if (this.props.location.state !== undefined) {
       isManager = this.props.location.state.isManager;
-    } else {
+    } else if (displayNav) {
       window.alert("Error: Not logged in!  Logout and try again.");
     }
     return (
