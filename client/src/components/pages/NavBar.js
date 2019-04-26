@@ -35,7 +35,12 @@ class NavBar extends React.Component {
       this.props.location.pathname === "/" ||
       this.props.location.pathname === "/registration"
     );
-    const isManager = true; //this.props.state.manager
+    let isManager = false;
+    if (this.props.location.state !== undefined) {
+      isManager = this.props.location.state.isManager;
+    } else {
+      window.alert("Error: Not logged in!  Logout and try again.");
+    }
     return (
       <div>
         {displayNav ? (
@@ -200,7 +205,10 @@ class NavBar extends React.Component {
     } else {
       this.props.history.push({
         pathname: "/dashboard",
-        state: { uID: this.props.location.state.uID }
+        state: {
+          uID: this.props.location.state.uID,
+          isManager: this.props.location.state.isManager
+        }
       });
     }
   };
@@ -210,7 +218,10 @@ class NavBar extends React.Component {
     } else {
       this.props.history.push({
         pathname: "/accounts",
-        state: { uID: this.props.location.state.uID }
+        state: {
+          uID: this.props.location.state.uID,
+          isManager: this.props.location.state.isManager
+        }
       });
     }
   };
@@ -220,7 +231,10 @@ class NavBar extends React.Component {
     } else {
       this.props.history.push({
         pathname: "/transfers",
-        state: { uID: this.props.location.state.uID }
+        state: {
+          uID: this.props.location.state.uID,
+          isManager: this.props.location.state.isManager
+        }
       });
     }
   }
@@ -230,7 +244,10 @@ class NavBar extends React.Component {
     } else {
       this.props.history.push({
         pathname: "/bills",
-        state: { uID: this.props.location.state.uID }
+        state: {
+          uID: this.props.location.state.uID,
+          isManager: this.props.location.state.isManager
+        }
       });
     }
   }
@@ -240,7 +257,10 @@ class NavBar extends React.Component {
     } else {
       this.props.history.push({
         pathname: "/reports",
-        state: { uID: this.props.location.state.uID }
+        state: {
+          uID: this.props.location.state.uID,
+          isManager: this.props.location.state.isManager
+        }
       });
     }
   }
@@ -250,7 +270,10 @@ class NavBar extends React.Component {
     } else {
       this.props.history.push({
         pathname: "/atms",
-        state: { uID: this.props.location.state.uID }
+        state: {
+          uID: this.props.location.state.uID,
+          isManager: this.props.location.state.isManager
+        }
       });
     }
   }

@@ -12,6 +12,7 @@ class DashboardPage extends React.Component {
   render() {
     console.log(this.state);
     console.log(this.props);
+    console.log(this.props.location.state.isManager);
     return (
       <div style={divStyle}>
         <h2>Welcome!</h2>
@@ -26,6 +27,11 @@ class DashboardPage extends React.Component {
         />
         <h3>Account Info</h3>
         <h4>User ID: {this.props.location.state.uID}</h4>
+        {this.props.location.state.isManager ? (
+          <h4>User Type: Manager</h4>
+        ) : (
+          <h4>User Type: Regular</h4>
+        )}
       </div>
     );
   }

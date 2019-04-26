@@ -31,12 +31,15 @@ class LoginForm extends React.Component {
     }).then(res => res.json());
     this.setState({ responseToPost: response });
     console.log(response.Success);
+
+    //local manager testing
+    const isManager = true;
+
     if (response.Success) {
       const user_id = response.uID;
-      //push manager as well
       this.props.history.push({
         pathname: "/dashboard",
-        state: { uID: user_id } //,manager
+        state: { uID: user_id, isManager: isManager }
       });
     } else {
       window.alert(
