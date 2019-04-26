@@ -30,7 +30,7 @@ class LoginForm extends React.Component {
       body: JSON.stringify({ post: data })
     }).then(res => res.json());
     this.setState({ responseToPost: response });
-    console.log(response.Success);
+    console.log(response);
     if (response.Success) {
       const user_id = response.uID;
       //push manager as well

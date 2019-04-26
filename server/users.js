@@ -97,10 +97,16 @@ router.post('/login', (req, res) => {
             Success: false
           });
         }
+        let user_type = false;
+        if (result[0].userType === 'manager') {
+          user_type = true;
+        }
+
         if (result1) {
           res.send({
             Success: true,
-            uID: result[0].uID
+            uID: result[0].uID,
+            isManager: user_type
           });
         }
       });

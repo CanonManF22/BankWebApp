@@ -114,10 +114,6 @@ router.post('/:user_id/transfer', (req, res) => {
   db.query(sqlt, (err, result) => {
     if (err) throw err;
     console.log('Create a transaction for  withdraw');
-    /*
-    res.send({
-      Success: true
-    }); */
   });
 
   const sql1 = `UPDATE Accounts SET accBalance = accBalance + ${withdrawAmt} WHERE Accounts.uID = ${uID} AND Accounts.accountID = ${toAcct}`;
@@ -132,12 +128,10 @@ router.post('/:user_id/transfer', (req, res) => {
   db.query(sqlt1, (err, result) => {
     if (err) throw err;
     console.log('Create a transaction for deposit');
-    /*
     res.send({
       Success: true
-    }); */
+    });
   });
-  res.send('Hello World');
 });
 
 router.post('/:user_id/transferExternal', (req, res) => {
@@ -151,10 +145,9 @@ router.post('/:user_id/transferExternal', (req, res) => {
     if (err) throw err;
     console.log('fuck yeah');
     console.log(result);
-  });
-
-  res.send({
-    Success: true
+    res.send({
+      Success: true
+    });
   });
 });
 
