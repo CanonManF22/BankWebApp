@@ -17,7 +17,7 @@ import ReportsPage from "./components/pages/ReportsPage";
 
 const divStyle = {
   backgroundColor: "#ffffff",
-  height: "150vh",
+  height: "100vh",
   width: "100vw",
   justifyContent: "center",
   alignItems: "center"

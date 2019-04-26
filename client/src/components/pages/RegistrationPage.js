@@ -36,25 +36,24 @@ class RegistrationPage extends React.Component {
           "Content-Type": "application/json"
         },
         body: JSON.stringify({ post: data })
-      }).then(res=>res.json());
-      console.log('asdsdasd response', response)
-      if (response.Success) window.alert("Registered!  Please Log In.");
-      if (!response.Success){
+      }).then(res => res.json());
+      console.log("asdsdasd response", response);
+      if (response.Success) {
+        window.alert("Registered!  Please Log In.");
+        this.routeToLogin();
+      } else {
         window.alert("Username exists, please choose another!");
-        this.routeToRegistration();
       }
     } else {
       window.alert("Passwords don't match or are too short!");
-      this.routeToLogin();
     }
   };
 
   routeToLogin = () => {
-    this.props.history.push("/");
-  };
-
-  routeToRegistration = () => {
-    this.props.history.push("/registration");
+    this.props.history.push({
+      pathname: "/",
+      state: {}
+    });
   };
 
   //required to accept inputs into form
