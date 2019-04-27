@@ -37,7 +37,6 @@ class BillPage extends React.Component {
     this.fetchAccounts().then(res =>
       res
         ? this.setState({
-            uID: this.props.location.state.uID,
             accounts: res,
             option1:
               this.state.accounts[0].accType +

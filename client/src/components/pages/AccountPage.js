@@ -98,6 +98,14 @@ class Page extends React.Component {
             <h2 style={{ float: "left" }}>
               {acc.accType + " - " + acc.accountID}
             </h2>
+            <h4 style={{ float: "left" }}>
+              <Nav.Link
+                style={{ cursor: "pointer" }}
+                onClick={() => this.routeChangeTransactions(acc.accountID)}
+              >
+                View Transactions
+              </Nav.Link>
+            </h4>
             <h3 style={{ float: "right" }}>
               {"$" +
                 parseFloat(Math.round(acc.accBalance * 100) / 100).toFixed(2)}
@@ -158,6 +166,17 @@ class Page extends React.Component {
       pathname: "/depositCheck",
       state: { uID: this.props.location.state.uID }
     });
+  };
+
+  routeChangeTransactions = accountID => {
+    if (this.props.location.state === undefined) {
+      window.alert("Error, not logged in!");
+    } else {
+      this.props.history.push({
+        pathname: "/transactions",
+        state: { uID: this.props.location.state.uID, accID: accountID }
+      });
+    }
   };
 }
 
