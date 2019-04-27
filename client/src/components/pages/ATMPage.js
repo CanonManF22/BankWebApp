@@ -105,7 +105,7 @@ export class MapContainer extends React.Component {
   //function to process search results
   callback = (results, status) => {
     const { google } = this.props;
-    if (status == google.maps.places.PlacesServiceStatus.OK) {
+    if (status === google.maps.places.PlacesServiceStatus.OK) {
       for (var i = 0; i < results.length; i++) {
         //var place = results[i];
         console.log(results[i]);
@@ -117,7 +117,7 @@ export class MapContainer extends React.Component {
   //creates markers on the map
   createMarker = place => {
     const { google } = this.props;
-    const marker = new google.maps.Marker({
+    new google.maps.Marker({
       map: this.map,
       position: place.geometry.location
     });

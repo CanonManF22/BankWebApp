@@ -112,10 +112,8 @@ class TransactionPage extends React.Component {
         />
 
         <div style={divStyleLightTitle}>
-          <h2 style={{ float: "left" }}>
-            {"Date" + " - " + "Transaction Type"}
-          </h2>
-          <h3 style={{ float: "right" }}>{"Amount" + " | " + "Cumulative"}</h3>
+          <h2 style={{ float: "left" }}>{"Date - Transaction Type"}</h2>
+          <h3 style={{ float: "right" }}>{"Amount | Cumulative"}</h3>
         </div>
 
         {this.state.transactions.map(trans => (

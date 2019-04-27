@@ -1,8 +1,8 @@
 import React from "react";
 import { Form, Button } from "react-bootstrap";
 import { withRouter } from "react-router-dom";
-import Dropzone from 'react-dropzone';
-import request from 'superagent';
+import Dropzone from "react-dropzone";
+import request from "superagent";
 
 const divStyle = {
   backgroundColor: "#c1ced9",
@@ -24,24 +24,23 @@ const dropStyle = {
 };
 
 const imgStyle = {
-	maxWidth: "300px"
-}
+  maxWidth: "300px"
+};
 
-const CLOUDINARY_UPLOAD_PRESET = 'xridflgz';
-const CLOUDINARY_UPLOAD_URL = 'https://api.cloudinary.com/v1_1/cs160bank/upload';
-
-
+const CLOUDINARY_UPLOAD_PRESET = "xridflgz";
+const CLOUDINARY_UPLOAD_URL =
+  "https://api.cloudinary.com/v1_1/cs160bank/upload";
 
 class DepositCheckPage extends React.Component {
-	constructor(props) {
-	    super(props);
-	    this.state = {
-	      uID: null,
-		  option1: null,
-	      depositAmt: 0,
-	      uploadedFileCloudinaryUrl: ''
-	    };
-	  }
+  constructor(props) {
+    super(props);
+    this.state = {
+      uID: null,
+      option1: null,
+      depositAmt: 0,
+      uploadedFileCloudinaryUrl: ""
+    };
+  }
 
   componentDidMount() {
     this.fetchAccounts().then(res =>
@@ -58,7 +57,7 @@ class DepositCheckPage extends React.Component {
                 Math.round(this.state.accounts[0].accBalance * 100) / 100
               ).toFixed(2)
           })
-        : this.setState({ accounts: res, option1: null})
+        : this.setState({ accounts: res, option1: null })
     );
   }
 
@@ -75,11 +74,11 @@ class DepositCheckPage extends React.Component {
       return { uID: -1 };
     }
 
-	const user_id = this.props.location.state.uID;
+    const user_id = this.props.location.state.uID;
     console.log(`http://localhost:8080/accounts/${user_id}`);
 
-	const response = await fetch(`http://localhost:8080/accounts/${user_id}`, {
-	  mode: "cors",
+    const response = await fetch(`http://localhost:8080/accounts/${user_id}`, {
+      mode: "cors",
       method: "GET",
       headers: {
         "Content-Type": "application/json"
@@ -93,39 +92,38 @@ class DepositCheckPage extends React.Component {
     }
   };
 
-	handleChange1 = e => {
-    	this.setState({
-      	option1: e.target.value
+  handleChange1 = e => {
+    this.setState({
+      option1: e.target.value
     });
   };
 
-	handleChangeNums = e => {
-    	this.setState({ depositAmt: e.target.value });
+  handleChangeNums = e => {
+    this.setState({ depositAmt: e.target.value });
   };
 
-	handleSubmit = async e => {
-	    const uID = this.props.location.state.uID;
-		if (this.state.depositAmt <= 0)
-	      window.alert("Error: Invalid deposit amount.");
-	    else {
-	        const response = await fetch(
-	          `http://localhost:8080/accounts/${uID}/deposit`,
-	          {
-	            mode: "cors",
-	            method: "POST",
-	            headers: {
-	              "Content-Type": "application/json"
-	            },
-	            body: JSON.stringify(this.state)
-	          }
-	        );
-	        console.log(response);
+  handleSubmit = async e => {
+    const uID = this.props.location.state.uID;
+    if (this.state.depositAmt <= 0)
+      window.alert("Error: Invalid deposit amount.");
+    else {
+      const response = await fetch(
+        `http://localhost:8080/accounts/${uID}/deposit`,
+        {
+          mode: "cors",
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify(this.state)
+        }
+      );
+      console.log(response);
+    }
+    console.log(this.state);
+  };
 
-	      }
-	    console.log(this.state);
-	  };
-
-	onImageDrop(files) {
+  onImageDrop(files) {
     this.setState({
       uploadedFile: files[0]
     });
@@ -134,16 +132,17 @@ class DepositCheckPage extends React.Component {
   }
 
   handleImageUpload(file) {
-    let upload = request.post(CLOUDINARY_UPLOAD_URL)
-                        .field('upload_preset', CLOUDINARY_UPLOAD_PRESET)
-                        .field('file', file);
+    let upload = request
+      .post(CLOUDINARY_UPLOAD_URL)
+      .field("upload_preset", CLOUDINARY_UPLOAD_PRESET)
+      .field("file", file);
 
     upload.end((err, response) => {
       if (err) {
         console.error(err);
       }
 
-      if (response.body.secure_url !== '') {
+      if (response.body.secure_url !== "") {
         this.setState({
           uploadedFileCloudinaryUrl: response.body.secure_url
         });
@@ -152,7 +151,7 @@ class DepositCheckPage extends React.Component {
   }
 
   render() {
-  	let fetched = this.state.accounts;
+    let fetched = this.state.accounts;
     if (fetched === undefined) fetched = [];
     return fetched.length ? (
       <div style={divStyle}>
@@ -166,45 +165,50 @@ class DepositCheckPage extends React.Component {
           }}
         />
 
-
-      <div>
-      <div className="FileUpload"  style={dropStyle}>
-        <Dropzone
-        	onDrop={this.onImageDrop.bind(this)}
-  			accept="image/*"
-  			multiple={false}>
-    			{({getRootProps, getInputProps}) => {
-      				return (
-        				<div
-          					{...getRootProps()}
-        				>
-          					<input {...getInputProps()} />
-          					{
-         					 <p>Drop an image or click to select an image to upload.</p>
-          					}
-        				</div>
-      				)
-  				}}
-		</Dropzone>
-      </div>
-
-      <div>
-        {this.state.uploadedFileCloudinaryUrl === '' ? null :
         <div>
-          <p>Image Uploaded: {this.state.uploadedFile.name}</p>
-          <img style={imgStyle} src={this.state.uploadedFileCloudinaryUrl} />
-        </div>}
-      </div>
-    </div>
-    <br />
+          <div className="FileUpload" style={dropStyle}>
+            <Dropzone
+              onDrop={this.onImageDrop.bind(this)}
+              accept="image/*"
+              multiple={false}
+            >
+              {({ getRootProps, getInputProps }) => {
+                return (
+                  <div {...getRootProps()}>
+                    <input {...getInputProps()} />
+                    {
+                      <p>
+                        Drop an image or click to select an image to upload.
+                      </p>
+                    }
+                  </div>
+                );
+              }}
+            </Dropzone>
+          </div>
+
+          <div>
+            {this.state.uploadedFileCloudinaryUrl === "" ? null : (
+              <div>
+                <p>Image Uploaded: {this.state.uploadedFile.name}</p>
+                <img
+                  style={imgStyle}
+                  alt="check"
+                  src={this.state.uploadedFileCloudinaryUrl}
+                />
+              </div>
+            )}
+          </div>
+        </div>
+        <br />
         <Form.Group>
-        <Form.Label style={{ fontSize: "150%" }}>Amount ($USD)</Form.Label>
+          <Form.Label style={{ fontSize: "150%" }}>Amount ($USD)</Form.Label>
           <Form.Control
             type="number"
             value={this.state.depositAmt}
             onChange={this.handleChangeNums}
           />
-        <Form.Label style={{ fontSize: "150%" }}>Deposit To</Form.Label>
+          <Form.Label style={{ fontSize: "150%" }}>Deposit To</Form.Label>
           <Form.Control as="select" onChange={this.handleChange1}>
             {this.state.accounts.map(acc => (
               <option>
@@ -222,7 +226,7 @@ class DepositCheckPage extends React.Component {
           </Button>
         </Form.Group>
       </div>
-      ) : (
+    ) : (
       <div style={divStyle}>
         <h1 style={{ color: "#000000" }}>No accounts for this user.</h1>
       </div>
