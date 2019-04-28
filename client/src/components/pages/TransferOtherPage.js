@@ -114,7 +114,7 @@ class TransferOtherPage extends React.Component {
           window.alert("Transfer successfully processed.");
           this.props.history.push({
             pathname: "/transfers",
-            state: { uID: uID } //,manager
+            state: { uID: uID, isManager: this.props.location.state.isManager } //,manager
           });
         } else {
           window.alert("Error during transfer.");

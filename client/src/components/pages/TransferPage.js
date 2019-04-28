@@ -47,7 +47,10 @@ class TransferPage extends React.Component {
     } else {
       this.props.history.push({
         pathname: "/transferChase",
-        state: { uID: this.props.location.state.uID }
+        state: {
+          uID: this.props.location.state.uID,
+          isManager: this.props.location.state.isManager
+        }
       });
     }
   };
@@ -58,7 +61,10 @@ class TransferPage extends React.Component {
     } else {
       this.props.history.push({
         pathname: "/transferOther",
-        state: { uID: this.props.location.state.uID }
+        state: {
+          uID: this.props.location.state.uID,
+          isManager: this.props.location.state.isManager
+        }
       });
     }
   };

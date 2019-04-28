@@ -149,7 +149,10 @@ class Page extends React.Component {
     } else {
       this.props.history.push({
         pathname: "/createAccount",
-        state: { uID: this.props.location.state.uID }
+        state: {
+          uID: this.props.location.state.uID,
+          isManager: this.props.location.state.isManager
+        }
       });
     }
   };
@@ -157,14 +160,20 @@ class Page extends React.Component {
   routeChangeManageAccs = () => {
     this.props.history.push({
       pathname: "/manageAccount",
-      state: { uID: this.props.location.state.uID }
+      state: {
+        uID: this.props.location.state.uID,
+        isManager: this.props.location.state.isManager
+      }
     });
   };
 
   routeChangeDepositCheck = () => {
     this.props.history.push({
       pathname: "/depositCheck",
-      state: { uID: this.props.location.state.uID }
+      state: {
+        uID: this.props.location.state.uID,
+        isManager: this.props.location.state.isManager
+      }
     });
   };
 
@@ -174,7 +183,11 @@ class Page extends React.Component {
     } else {
       this.props.history.push({
         pathname: "/transactions",
-        state: { uID: this.props.location.state.uID, accID: accountID }
+        state: {
+          uID: this.props.location.state.uID,
+          accID: accountID,
+          isManager: this.props.location.state.isManager
+        }
       });
     }
   };
