@@ -99,19 +99,26 @@ class TransferOtherPage extends React.Component {
       else {
         //do api call & redirect back to transfer page
         console.log(this.state);
-        await fetch(`http://localhost:8080/accounts/${uID}/transferExternal`, {
-          mode: "cors",
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json"
-          },
-          body: JSON.stringify(this.state)
-        });
-
-        // .then(res => res.json());
-        // if (response.Success ){
-        //   console.log('transfer worked')
-        // }
+        const response = await fetch(
+          `http://localhost:8080/accounts/${uID}/transferExternal`,
+          {
+            mode: "cors",
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json"
+            },
+            body: JSON.stringify(this.state)
+          }
+        ).then(res => res.json());
+        if (response.Success) {
+          window.alert("Transfer successfully processed.");
+          this.props.history.push({
+            pathname: "/transfers",
+            state: { uID: uID } //,manager
+          });
+        } else {
+          window.alert("Error during transfer.");
+        }
       }
     }
     console.log(this.state);
