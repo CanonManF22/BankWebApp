@@ -31,9 +31,9 @@ class CreateAccountPage extends React.Component {
         "Content-Type": "application/json"
       },
       body: JSON.stringify(this.state)
-    });
+    }).then(res=>res.json());
     console.log(response);
-    /* untested front end response
+    // untested front end response
     if (response.Success) { //
       window.alert("Successfully created account!");
       this.props.history.push({
@@ -42,7 +42,7 @@ class CreateAccountPage extends React.Component {
       });
     } else {
       window.alert("Error creating account");
-    } */
+    } 
   };
 
   render() {
