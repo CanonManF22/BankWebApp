@@ -55,24 +55,19 @@ router.post('/:account_id/deposit', (req, res) => {
   const { uID } = req.body;
   const { depositAmt } = req.body;
   const toAcct = req.body.accounts[0].accountID;
-  const date = new Date().toISOString().slice(0, 19).replace('T', ' ');
+  const date = new Date();
 
   const sql = `UPDATE Accounts SET accBalance = accBalance + ${depositAmt} WHERE Accounts.uID = ${uID} AND Accounts.accountID = ${toAcct}`;
   db.query(sql, (err, result) => {
     if (err) throw err;
-    /*
     console.log(result);
-    res.send({
-      Success: true
-    }); */
-  });
-
-  const sqlt = `INSERT INTO Transactions(uID, originAccountID, receiverAccountID, transactionDate, payment, type) VALUES ('${uID}', '${toAcct}', '${toAcct}', '${date}', ${depositAmt}, 'deposit');`;
-  db.query(sqlt, (err, result) => {
-    if (err) throw err;
-    console.log(result);
-    res.send({
-      Success: true
+    const sqlt = `INSERT INTO Transactions(uID, originAccountID, originAccountID, date, payment,type) VALUES ('${uID}', '${toAcct}', '${toAcct}', '${date}', ${depositAmt}, 'deposit');`;
+    db.query(sqlt, (err, result1) => {
+      if (err) throw err;
+      console.log(result1);
+      res.send({
+        Success: true
+      });
     });
   });
 });
@@ -99,7 +94,7 @@ router.post('/:user_id/transfer', (req, res) => {
   const withdrawAmt = req.body.transferamt;
   const fromAcct = req.body.accounts[0].accountID;
   const toAcct = req.body.accounts[1].accountID;
-  const date = new Date().toISOString().slice(0, 19).replace('T', ' ');
+  const date = new Date();
 
   console.log(uID, withdrawAmt, fromAcct, toAcct);
   // TODO: make transfer sql
@@ -108,30 +103,28 @@ router.post('/:user_id/transfer', (req, res) => {
   db.query(sql, (err, result) => {
     if (err) throw err;
     console.log('withdrew amount');
-  });
-
-  const sqlt = `INSERT INTO Transactions (uID, originAccountID, receiverAccountID, transactionDate, payment, type) VALUES ('${uID}', '${fromAcct}', '${toAcct}', '${date}', ${withdrawAmt}, 'withdraw');`;
-  db.query(sqlt, (err, result) => {
-    if (err) throw err;
-    console.log('Create a transaction for  withdraw');
-  });
-
-  const sql1 = `UPDATE Accounts SET accBalance = accBalance + ${withdrawAmt} WHERE Accounts.uID = ${uID} AND Accounts.accountID = ${toAcct}`;
-  console.log(sql1);
-  db.query(sql1, (err, result) => {
-    if (err) throw err;
-
-    console.log('transfered amount');
-  });
-
-  const sqlt1 = `INSERT INTO Transactions(uID, receiverAccountID, originAccountID, transactionDate, payment,type) VALUES ('${uID}', '${fromAcct}', '${toAcct}', '${date}', ${withdrawAmt}, 'deposit');`;
-  db.query(sqlt1, (err, result) => {
-    if (err) throw err;
-    console.log('Create a transaction for deposit');
-    res.send({
-      Success: true
+    const sqlt = `INSERT INTO Transactions (uID, originAccountID, receiverAccountID, payment,type) VALUES ('${uID}', '${fromAcct}', '${toAcct}', ${withdrawAmt}, 'withdraw');`;
+    db.query(sqlt, (err, result) => {
+      if (err) throw err;
+      console.log('Create a transaction for  withdraw');
+      const sql1 = `UPDATE Accounts SET accBalance = accBalance + ${withdrawAmt} WHERE Accounts.uID = ${uID} AND Accounts.accountID = ${toAcct}`;
+      console.log(sql1);
+      db.query(sql1, (err, result) => {
+        if (err) throw err;
+        console.log('transfered amount');
+        const sqlt1 = `INSERT INTO Transactions(uID, receiverAccountID, originAccountID, payment,type) VALUES ('${uID}', '${fromAcct}', '${toAcct}', ${withdrawAmt}, 'deposit');`;
+        db.query(sqlt1, (err, result) => {
+          if (err) throw err;
+          console.log('Create a transaction for deposit');
+          res.send({
+            Success: true
+          });
+          console.log('res sent');
+        });
+      });
     });
   });
+  console.log('last');
 });
 
 router.post('/:user_id/transferExternal', (req, res) => {

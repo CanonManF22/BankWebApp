@@ -72,6 +72,7 @@ class TransferChasePage extends React.Component {
         "Content-Type": "application/json"
       }
     }).then(res => res.json());
+    console.log('res success:', response.Success)
     this.setState({ accounts: response, uID: this.props.location.state.uID });
     if (response.length < 1) {
       window.alert("No accounts for this user");
@@ -124,9 +125,8 @@ class TransferChasePage extends React.Component {
             },
             body: JSON.stringify(this.state)
           }
-        );
-        console.log(response);
-        /* Untested frontend response
+        ).then(res=>res.json());
+        //Untested frontend response
         if (response.Success) {
           window.alert("Transfer successfully processed.");
           this.props.history.push({
@@ -135,7 +135,7 @@ class TransferChasePage extends React.Component {
           });
         } else {
           window.alert("Error during transfer.");
-        } */
+        } 
       }
     }
     console.log(this.state);
