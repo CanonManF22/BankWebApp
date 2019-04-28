@@ -84,6 +84,7 @@ class DepositCheckPage extends React.Component {
         "Content-Type": "application/json"
       }
     }).then(res => res.json());
+    console.log(response)
     this.setState({ accounts: response, uID: this.props.location.state.uID });
     if (response.length < 1) {
       window.alert("No accounts for this user");
@@ -107,6 +108,7 @@ class DepositCheckPage extends React.Component {
     if (this.state.depositAmt <= 0)
       window.alert("Error: Invalid deposit amount.");
     else {
+      console.log('make request')
       const response = await fetch(
         `http://localhost:8080/accounts/${uID}/deposit`,
         {
@@ -117,10 +119,9 @@ class DepositCheckPage extends React.Component {
           },
           body: JSON.stringify(this.state)
         }
-      );
-      console.log(response);
+      ).then(res=>res.json());
+      console.log(response.Success);
     }
-    console.log(this.state);
   };
 
   onImageDrop(files) {
