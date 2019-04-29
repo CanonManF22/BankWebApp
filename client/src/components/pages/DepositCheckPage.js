@@ -47,15 +47,7 @@ class DepositCheckPage extends React.Component {
       res
         ? this.setState({
             accounts: res,
-            option1:
-              this.state.accounts[0].accType +
-              " - " +
-              this.state.accounts[0].accountID +
-              " - " +
-              "$" +
-              parseFloat(
-                Math.round(this.state.accounts[0].accBalance * 100) / 100
-              ).toFixed(2)
+            option1: this.state.accounts[0].accountID 
           })
         : this.setState({ accounts: res, option1: null })
     );
@@ -109,6 +101,7 @@ class DepositCheckPage extends React.Component {
       window.alert("Error: Invalid deposit amount.");
     else {
       console.log("make request");
+      console.log('reqqq', this.state)
       const response = await fetch(
         `http://localhost:8080/accounts/${uID}/deposit`,
         {
@@ -220,7 +213,7 @@ class DepositCheckPage extends React.Component {
           <Form.Label style={{ fontSize: "150%" }}>Deposit To</Form.Label>
           <Form.Control as="select" onChange={this.handleChange1}>
             {this.state.accounts.map(acc => (
-              <option>
+              <option value={acc.accountID}>
                 {acc.accType +
                   " - " +
                   acc.accountID +

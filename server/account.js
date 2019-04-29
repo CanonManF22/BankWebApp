@@ -54,7 +54,7 @@ router.put('/:user_id/close', (req, res) => {
 router.post('/:account_id/deposit', (req, res) => {
   const { uID } = req.body;
   const { depositAmt } = req.body;
-  const toAcct = req.body.accounts[0].accountID;
+  const toAcct = req.body.option1;
   const date = new Date()
     .toISOString()
     .slice(0, 19)
