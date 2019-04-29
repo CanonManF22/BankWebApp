@@ -5,6 +5,7 @@ const cors = require('cors');
 const users = require('./users');
 const accounts = require('./account');
 const transactions = require('./transactions');
+const bills = require('./bills');
 
 const app = express();
 
@@ -25,6 +26,7 @@ app.use(bodyParser.json());
 app.use('/users', users);
 app.use('/accounts', accounts);
 app.use('/transactions', transactions);
+app.use('/bills', bills);
 // Renders if react isn't running
 app.get('/', function(req, res) {
   res.send('React Not Running');
