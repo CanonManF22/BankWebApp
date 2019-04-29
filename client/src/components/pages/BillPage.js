@@ -27,6 +27,7 @@ class BillPage extends React.Component {
     this.state = {
       uID: null,
       option1: null,
+      option2: null,
       date: formatted,
       payamt: 0
     };
@@ -39,6 +40,15 @@ class BillPage extends React.Component {
         ? this.setState({
             accounts: res,
             option1:
+              this.state.accounts[0].accType +
+              " - " +
+              this.state.accounts[0].accountID +
+              " - " +
+              "$" +
+              parseFloat(
+                Math.round(this.state.accounts[0].accBalance * 100) / 100
+              ).toFixed(2),
+            option2:
               this.state.accounts[0].accType +
               " - " +
               this.state.accounts[0].accountID +
@@ -105,6 +115,13 @@ class BillPage extends React.Component {
     });
   };
 
+  //second dropdown
+  handleChangeOption2 = e => {
+    this.setState({
+      option2: e.target.value
+    });
+  };
+
   //amount
   handleChangeAmt = e => {
     this.setState({ payamt: e.target.value });
@@ -121,6 +138,7 @@ class BillPage extends React.Component {
     //this.state.uID
     //this.state.option1 for chosen account in 'Saving - 010101010 - $101.10' format.  Split between ' - ' and remove $ if needed
     //this.state.date is formatted as "YYYY-MM-DD", zero padded
+    console.log(this.state);
   };
 
   render() {
@@ -138,6 +156,23 @@ class BillPage extends React.Component {
           }}
         />
         <Form.Group>
+          <Form.Group>
+            <Form.Label style={{ fontSize: "150%" }}>Source Account</Form.Label>
+            <Form.Control as="select" onChange={this.handleChangeOption2}>
+              {this.state.accounts.map(acc => (
+                <option>
+                  {acc.accType +
+                    " - " +
+                    acc.accountID +
+                    " - " +
+                    "$" +
+                    parseFloat(Math.round(acc.accBalance * 100) / 100).toFixed(
+                      2
+                    )}
+                </option>
+              ))}
+            </Form.Control>
+          </Form.Group>
           <Form.Group>
             <Form.Label style={{ fontSize: "150%" }}>Pay To</Form.Label>
             <Form.Control as="select" onChange={this.handleChangeOption}>
