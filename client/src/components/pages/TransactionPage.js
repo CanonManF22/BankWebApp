@@ -78,6 +78,7 @@ class TransactionPage extends React.Component {
   };
 
   fetchTransactions = async e => {
+    console.log('asdasds')
     //local debug transaction testing
     this.setState({
       transactions: [
@@ -92,14 +93,15 @@ class TransactionPage extends React.Component {
       ]
     });
     const user_id = this.props.location.state.uID;
+    console.log(`http://localhost:8080/transactions/${user_id}`)
     //do api call for transactions here
-    const response = await fetch(`http://localhost:8080/transfers/${user_id}`, {
+    const response = await fetch(`http://localhost:8080/transactions/${user_id}`, {
       mode: "cors",
       method: "GET",
       headers: {
         "Content-Type": "application/json"
       }
-    }).then(res => res.json());
+    }).then(res=>res.json());
     console.log(response);
   };
 
