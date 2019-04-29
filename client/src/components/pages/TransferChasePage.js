@@ -112,7 +112,9 @@ class TransferChasePage extends React.Component {
       let secondSplit = this.state.option2.split(" - ");
       firstSplit[2] = firstSplit[2].substring(1);
       secondSplit[2] = secondSplit[2].substring(1);
-      if (parseFloat(firstSplit[2]) <= parseFloat(this.state.transferamt))
+      console.log(firstSplit);
+      console.log(this.state.transferamt);
+      if (parseFloat(firstSplit[2]) < parseFloat(this.state.transferamt))
         window.alert("Error: Not Enough Funds");
       else {
         const response = await fetch(
