@@ -31,18 +31,19 @@ class CreateAccountPage extends React.Component {
         "Content-Type": "application/json"
       },
       body: JSON.stringify(this.state)
-    }).then(res=>res.json());
+    }).then(res => res.json());
     console.log(response);
     // untested front end response
-    if (response.Success) { //
+    if (response.Success) {
+      //
       window.alert("Successfully created account!");
       this.props.history.push({
         pathname: "/accounts",
-        state: { uID: uID } //,manager
+        state: { uID: uID, isManager: this.props.location.state.isManager } //,manager
       });
     } else {
       window.alert("Error creating account");
-    } 
+    }
   };
 
   render() {

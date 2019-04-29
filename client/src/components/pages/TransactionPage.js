@@ -35,6 +35,7 @@ class TransactionPage extends React.Component {
       uID: null,
       accID: null,
       accounts: [],
+      accBalance: null,
       transactions: []
     };
   }
@@ -65,6 +66,8 @@ class TransactionPage extends React.Component {
       }
     }).then(res => res.json());
 
+    console.log(response);
+
     const accID = this.props.location.state.accID;
     this.setState({ accounts: response, uID: user_id, accID: accID });
 
@@ -78,8 +81,9 @@ class TransactionPage extends React.Component {
   };
 
   fetchTransactions = async e => {
-    console.log('asdasds')
+    console.log("asdasds");
     //local debug transaction testing
+    /*
     this.setState({
       transactions: [
         { date: "2019-04-27", amount: "500", type: "deposit", cumul: "1000" },
@@ -91,18 +95,59 @@ class TransactionPage extends React.Component {
         },
         { date: "2019-04-25", amount: "-300", type: "transfer", cumul: "100" }
       ]
-    });
+    }); */
     const user_id = this.props.location.state.uID;
-    console.log(`http://localhost:8080/transactions/${user_id}`)
+    console.log(`http://localhost:8080/transactions/${user_id}`);
     //do api call for transactions here
-    const response = await fetch(`http://localhost:8080/transactions/${user_id}`, {
-      mode: "cors",
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json"
+    const response = await fetch(
+      `http://localhost:8080/transactions/${user_id}`,
+      {
+        mode: "cors",
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json"
+        }
       }
-    }).then(res=>res.json());
+    ).then(res => res.json());
     console.log(response);
+    //filter transactions for this acc only
+    let filteredTrans = [];
+    for (let i = response.length - 1; i >= 0; i--) {
+      if (
+        response[i].originAccountID === this.state.accID ||
+        response[i].receiverAccountID === this.state.accID
+      ) {
+        let tempResponse = response[i];
+        if (tempResponse.type === "withdraw") {
+          tempResponse.payment =
+            Math.abs(parseFloat(tempResponse.payment)) * -1;
+        } else {
+          tempResponse.payment = Math.abs(parseFloat(tempResponse.payment));
+        }
+        filteredTrans.push(tempResponse);
+      }
+    }
+
+    //get current balance to compute cumulative
+    for (let i = 0; i < this.state.accounts.length; i++) {
+      if (this.state.accounts[i].accountID === this.state.accID) {
+        this.setState({ accBalance: this.state.accounts[i].accBalance });
+      }
+    }
+
+    let tempBal = this.state.accBalance;
+    for (let i = 0; i < filteredTrans.length; i++) {
+      if (i === 0) {
+        tempBal = parseFloat(tempBal) - parseFloat(filteredTrans[i].payment);
+      }
+      filteredTrans[i].cumSum =
+        parseFloat(tempBal) + parseFloat(filteredTrans[i].payment);
+      tempBal = parseFloat(tempBal) + parseFloat(filteredTrans[i].payment);
+    }
+
+    console.log(filteredTrans);
+
+    this.setState({ transactions: filteredTrans });
   };
 
   render() {
@@ -129,12 +174,14 @@ class TransactionPage extends React.Component {
 
         {this.state.transactions.map(trans => (
           <div style={divStyleLight}>
-            <h2 style={{ float: "left" }}>{trans.date + " - " + trans.type}</h2>
+            <h2 style={{ float: "left" }}>
+              {trans.transactionDate.substring(0, 10) + " - " + trans.type}
+            </h2>
             <h3 style={{ float: "right" }}>
               {"$" +
-                parseFloat(Math.round(trans.amount * 100) / 100).toFixed(2) +
+                parseFloat(Math.round(trans.payment * 100) / 100).toFixed(2) +
                 " | $" +
-                parseFloat(Math.round(trans.cumul * 100) / 100).toFixed(2)}
+                parseFloat(Math.round(trans.cumSum * 100) / 100).toFixed(2)}
             </h3>
           </div>
         ))}
