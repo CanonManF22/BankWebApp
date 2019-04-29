@@ -118,7 +118,10 @@ class TransactionPage extends React.Component {
         response[i].receiverAccountID === this.state.accID
       ) {
         let tempResponse = response[i];
-        if (tempResponse.type === "withdraw") {
+        if (
+          tempResponse.type === "withdraw" ||
+          tempResponse.type === "Transfer to other bank"
+        ) {
           tempResponse.payment =
             Math.abs(parseFloat(tempResponse.payment)) * -1;
         } else {
