@@ -77,16 +77,25 @@ router.post('/:account_id/deposit', (req, res) => {
   });
 });
 
-// withdraw
+// withdraw for taking out from ATM --> so far it is not use
 router.post('/:account_id/withdraw', (req, res) => {
   const accountId = req.params.account_id;
   // TODO: check if uID is the same as account.uID
   const { uID } = req;
   const { withdrawAmt } = req;
+  const toAcct = req.body.accounts[0].accountID;
   const sql = `UPDATE Accounts SET accBalance = accBalance - ${withdrawAmt} WHERE Accounts.uID = ${uID}`;
   db.query(sql, (err, result) => {
     if (err) throw err;
-    console.log(result);
+    console.log('withdraw amount');
+    const sqlt = `INSERT INTO Transactions (uID, originAccountID, receiverAccountID, transactionDate, payment, type) VALUES ('${uID}', '${toAcct}', '${toAcct}', '${date}', ${withdrawAmt}, 'withdraw');`;
+    db.query(sqlt, (err1, result1) => {
+      if (err1) throw err1;
+      console.log('Create a transaction for  withdraw');
+
+    });
+
+    //console.log(result);
     res.send({
       Success: true
     });
@@ -110,7 +119,7 @@ router.post('/:user_id/transfer', (req, res) => {
   console.log(sql);
   db.query(sql, (err, result) => {
     if (err) throw err;
-    console.log('withdrew amount');
+    console.log('withdraw amount');
     const sqlt = `INSERT INTO Transactions (uID, originAccountID, receiverAccountID, transactionDate, payment, type) VALUES ('${uID}', '${fromAcct}', '${toAcct}', '${date}', ${withdrawAmt}, 'withdraw');`;
     db.query(sqlt, (err, result) => {
       if (err) throw err;
@@ -138,11 +147,20 @@ router.post('/:user_id/transferExternal', (req, res) => {
   const { uID } = req.body;
   const withdrawAmt = req.body.transferamt;
   const acctID = req.body.option1.split(' - ')[1];
+  const routingnum = req.body.routingnum;
+  const accountnum = req.body.accountnum;
+  const bankname = req.body.bankname;
+  const transactionType = 'Transfer to bank: ' + bankname;
 
-  // TODO: make transfer sql
   const sql = `UPDATE Accounts SET accBalance = accBalance - ${withdrawAmt} WHERE Accounts.uID = ${uID} AND Accounts.accountID = ${acctID}`;
   db.query(sql, (err, result) => {
     if (err) throw err;
+    console.log('withdraw amount');
+    const sqlt = `INSERT INTO Transactions (uID, originAccountID, receiverAccountID, payment, type) VALUES ('${uID}', '${acctID}', '${accountnum}',  ${withdrawAmt}, 'Transfer to other bank');`;
+    db.query(sqlt, (err1, result1) => {
+      if (err1) throw err1;
+      console.log('Create a transaction for transfer to another Bank');
+    });
     console.log('fuck yeah');
     console.log(result);
     res.send({
