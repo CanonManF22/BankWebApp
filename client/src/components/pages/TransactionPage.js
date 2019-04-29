@@ -113,20 +113,20 @@ class TransactionPage extends React.Component {
     //filter transactions for this acc only
     let filteredTrans = [];
     for (let i = response.length - 1; i >= 0; i--) {
+      let tempResponse = response[i];
       if (
-        response[i].originAccountID === this.state.accID ||
-        response[i].receiverAccountID === this.state.accID
+        (tempResponse.type === "withdraw" &&
+          tempResponse.originAccountID === this.state.accID) ||
+        (tempResponse.type === "Transfer to other bank" &&
+          tempResponse.originAccountID === this.state.accID)
       ) {
-        let tempResponse = response[i];
-        if (
-          tempResponse.type === "withdraw" ||
-          tempResponse.type === "Transfer to other bank"
-        ) {
-          tempResponse.payment =
-            Math.abs(parseFloat(tempResponse.payment)) * -1;
-        } else {
-          tempResponse.payment = Math.abs(parseFloat(tempResponse.payment));
-        }
+        tempResponse.payment = Math.abs(parseFloat(tempResponse.payment)) * -1;
+        filteredTrans.push(tempResponse);
+      } else if (
+        tempResponse.type === "deposit" &&
+        tempResponse.originAccountID === this.state.accID
+      ) {
+        tempResponse.payment = Math.abs(parseFloat(tempResponse.payment));
         filteredTrans.push(tempResponse);
       }
     }
@@ -140,15 +140,9 @@ class TransactionPage extends React.Component {
 
     let tempBal = this.state.accBalance;
     for (let i = 0; i < filteredTrans.length; i++) {
-      if (i === 0) {
-        tempBal = parseFloat(tempBal) - parseFloat(filteredTrans[i].payment);
-      }
-      filteredTrans[i].cumSum =
-        parseFloat(tempBal) + parseFloat(filteredTrans[i].payment);
-      tempBal = parseFloat(tempBal) + parseFloat(filteredTrans[i].payment);
+      filteredTrans[i].cumSum = tempBal;
+      tempBal = parseFloat(tempBal) - parseFloat(filteredTrans[i].payment);
     }
-
-    console.log(filteredTrans);
 
     this.setState({ transactions: filteredTrans });
   };
