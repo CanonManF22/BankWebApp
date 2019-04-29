@@ -91,7 +91,16 @@ class TransactionPage extends React.Component {
         { date: "2019-04-25", amount: "-300", type: "transfer", cumul: "100" }
       ]
     });
+    const user_id = this.props.location.state.uID;
     //do api call for transactions here
+    const response = await fetch(`http://localhost:8080/transfers/${user_id}`, {
+      mode: "cors",
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json"
+      }
+    }).then(res => res.json());
+    console.log(response);
   };
 
   render() {
