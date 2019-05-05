@@ -6,7 +6,7 @@ const db = require('./db');
 // TODO:
 // get all accounts of a user
 router.get('/:user_id', (req, res) => {
-  const parameters = req.filters;
+  const parameters = JSON.stringify(req.filters).replace(':', '=');
   console.log(req.params);
   const { user_id } = req.params;
   console.log(user_id);
