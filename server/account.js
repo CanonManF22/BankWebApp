@@ -6,11 +6,14 @@ const db = require('./db');
 // TODO:
 // get all accounts of a user
 router.get('/:user_id', (req, res) => {
+  const parameters = req.filters;
   console.log(req.params);
   const { user_id } = req.params;
   console.log(user_id);
-  // res.send('hello world');
-  const sql = `SELECT * FROM Accounts WHERE uID = ${user_id}`;
+
+  // query with options
+  const sql = `SELECT * FROM Accounts WHERE ${parameters}`;
+  // const sql = `SELECT * FROM Accounts WHERE uID = ${user_id}`;
   console.log(sql);
   db.query(sql, (err, result) => {
     if (err) throw err;
