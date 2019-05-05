@@ -17,12 +17,14 @@ router.get('/:user_id', (req, res) => {
 
 router.post('/create', (req, res) => {
   const { user_id } = req.uID;
-  const { fromAcct } = req.options2;
+  const { accType } = accType;
+  const { accountID } = req.options2;
   const { toAcct } = req.options1;
   const { amt } = req.payamt;
   const { date } = req;
+  const { days } = req;
 
-  const sql = `INSERT INTO Bills (uID) WHERE uID = ${user_id};`;
+  const sql = `INSERT INTO Bills (uID, accountID, billBalance, creationDate, days) VALUES (${user_id}, ${fromAcct}, ${amt}, ${creationDate}, ${days});`;
 
   db.query(sql, (err, result) => {
     if (err) throw err;
