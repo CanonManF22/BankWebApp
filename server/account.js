@@ -221,6 +221,10 @@ router.post('/:user_id/transferInternal', (req, res) => {
           });
         });
       });
+    } else {
+      res.send({
+        Success: false
+      });
     }
   });
 });
