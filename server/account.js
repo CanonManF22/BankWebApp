@@ -1,11 +1,11 @@
-const express = require("express");
+const express = require('express');
 
 const router = express.Router();
-const db = require("./db");
+const db = require('./db');
 
 // TODO:
 // get all accounts of a user
-router.get("/:user_id", (req, res) => {
+router.get('/:user_id', (req, res) => {
   console.log(req.params);
   const { user_id } = req.params;
   console.log(user_id);
@@ -20,8 +20,8 @@ router.get("/:user_id", (req, res) => {
 });
 
 // generate manager reports by filter
-router.get("/reports", (req, res) => {
-  const parameters = JSON.stringify(req.filters).replace(":", "=");
+router.get('/reports', (req, res) => {
+  const parameters = JSON.stringify(req.filters).replace(':', '=');
   console.log(req.params);
   const { user_id } = req.params;
   console.log(user_id);
@@ -37,7 +37,7 @@ router.get("/reports", (req, res) => {
 });
 
 // open account
-router.post("/:user_id/open", (req, res) => {
+router.post('/:user_id/open', (req, res) => {
   // generate from front end
   const uID = req.params.user_id;
   const accType = req.body.bankType;
@@ -53,7 +53,7 @@ router.post("/:user_id/open", (req, res) => {
 });
 
 // close account
-router.put("/:user_id/close", (req, res) => {
+router.put('/:user_id/close', (req, res) => {
   // generate from front end
   const uID = req.params.user_id;
   const sql = `DELETE FROM Accounts WHERE accountID = ${uID}`;
@@ -68,14 +68,14 @@ router.put("/:user_id/close", (req, res) => {
 });
 
 // deposit
-router.post("/:account_id/deposit", (req, res) => {
+router.post('/:account_id/deposit', (req, res) => {
   const { uID } = req.body;
   const { depositAmt } = req.body;
   const toAcct = req.body.option1;
   const date = new Date()
     .toISOString()
     .slice(0, 19)
-    .replace("T", " ");
+    .replace('T', ' ');
 
   console.log(date);
 
@@ -86,7 +86,7 @@ router.post("/:account_id/deposit", (req, res) => {
     console.log(result);
     db.query(sqlt, (err, result1) => {
       if (err) throw err;
-      console.log("deposit success");
+      console.log('deposit success');
       res.send({
         Success: true
       });
@@ -95,7 +95,7 @@ router.post("/:account_id/deposit", (req, res) => {
 });
 
 // withdraw for taking out from ATM --> so far it is not use
-router.post("/:account_id/withdraw", (req, res) => {
+router.post('/:account_id/withdraw', (req, res) => {
   const accountId = req.params.account_id;
   // TODO: check if uID is the same as account.uID
   const { uID } = req;
@@ -104,11 +104,11 @@ router.post("/:account_id/withdraw", (req, res) => {
   const sql = `UPDATE Accounts SET accBalance = accBalance - ${withdrawAmt} WHERE Accounts.uID = ${uID}`;
   db.query(sql, (err, result) => {
     if (err) throw err;
-    console.log("withdraw amount");
+    console.log('withdraw amount');
     const sqlt = `INSERT INTO Transactions (uID, originAccountID, receiverAccountID, transactionDate, payment, type) VALUES ('${uID}', '${toAcct}', '${toAcct}', '${date}', ${withdrawAmt}, 'withdraw');`;
     db.query(sqlt, (err1, result1) => {
       if (err1) throw err1;
-      console.log("Create a transaction for  withdraw");
+      console.log('Create a transaction for  withdraw');
     });
 
     // console.log(result);
@@ -118,16 +118,16 @@ router.post("/:account_id/withdraw", (req, res) => {
   });
 });
 
-router.post("/:user_id/transfer", (req, res) => {
+router.post('/:user_id/transfer', (req, res) => {
   // TODO: check if uID is the same as account.uID
   const { uID } = req.body;
   const withdrawAmt = req.body.transferamt;
-  const fromAcct = req.body.option1.split(" - ")[1]; // req.body.accounts[0].accountID;
-  const toAcct = req.body.option2.split(" - ")[1]; // req.body.accounts[1].accountID;
+  const fromAcct = req.body.option1.split(' - ')[1]; // req.body.accounts[0].accountID;
+  const toAcct = req.body.option2.split(' - ')[1]; // req.body.accounts[1].accountID;
   const date = new Date()
     .toISOString()
     .slice(0, 19)
-    .replace("T", " ");
+    .replace('T', ' ');
 
   console.log(uID, withdrawAmt, fromAcct, toAcct);
   // TODO: make transfer sql
@@ -135,34 +135,34 @@ router.post("/:user_id/transfer", (req, res) => {
   console.log(sql);
   db.query(sql, (err, result) => {
     if (err) throw err;
-    console.log("withdraw amount");
+    console.log('withdraw amount');
     const sqlt = `INSERT INTO Transactions (uID, originAccountID, receiverAccountID, transactionDate, payment, type) VALUES ('${uID}', '${fromAcct}', '${toAcct}', '${date}', ${withdrawAmt}, 'withdraw');`;
     db.query(sqlt, (err, result) => {
       if (err) throw err;
-      console.log("Create a transaction for  withdraw");
+      console.log('Create a transaction for  withdraw');
       const sql1 = `UPDATE Accounts SET accBalance = accBalance + ${withdrawAmt} WHERE Accounts.uID = ${uID} AND Accounts.accountID = ${toAcct}`;
       console.log(sql1);
       db.query(sql1, (err, result) => {
         if (err) throw err;
-        console.log("transfered amount");
+        console.log('transfered amount');
         const sqlt1 = `INSERT INTO Transactions(uID, receiverAccountID, originAccountID, transactionDate, payment,type) VALUES ('${uID}', '${fromAcct}', '${toAcct}', '${date}', ${withdrawAmt}, 'deposit');`;
         db.query(sqlt1, (err, result) => {
           if (err) throw err;
-          console.log("Create a transaction for deposit");
+          console.log('Create a transaction for deposit');
           res.send({
             Success: true
           });
-          console.log("res sent");
+          console.log('res sent');
         });
       });
     });
   });
 });
 
-router.post("/:user_id/transferExternal", (req, res) => {
+router.post('/:user_id/transferExternal', (req, res) => {
   const { uID } = req.body;
   const withdrawAmt = req.body.transferamt;
-  const acctID = req.body.option1.split(" - ")[1];
+  const acctID = req.body.option1.split(' - ')[1];
   const { routingnum } = req.body;
   const { accountnum } = req.body;
   const { bankname } = req.body;
@@ -171,13 +171,12 @@ router.post("/:user_id/transferExternal", (req, res) => {
   const sql = `UPDATE Accounts SET accBalance = accBalance - ${withdrawAmt} WHERE Accounts.uID = ${uID} AND Accounts.accountID = ${acctID}`;
   db.query(sql, (err, result) => {
     if (err) throw err;
-    console.log("withdraw amount");
+    console.log('withdraw amount');
     const sqlt = `INSERT INTO Transactions (uID, originAccountID, receiverAccountID, payment, type) VALUES ('${uID}', '${acctID}', '${accountnum}',  ${withdrawAmt}, 'Transfer to other bank');`;
     db.query(sqlt, (err1, result1) => {
       if (err1) throw err1;
-      console.log("Create a transaction for transfer to another Bank");
+      console.log('Create a transaction for transfer to another Bank');
     });
-    console.log("fuck yeah");
     console.log(result);
     res.send({
       Success: true
@@ -185,38 +184,44 @@ router.post("/:user_id/transferExternal", (req, res) => {
   });
 });
 
-router.post("/:user_id/transferInternal", (req, res) => {
+router.post('/:user_id/transferInternal', (req, res) => {
   // TODO: check if uID is the same as account.uID
   const { uID } = req.body;
   const withdrawAmt = req.body.transferamt;
-  const fromAcct = req.body.option1.split(" - ")[1]; // req.body.accounts[0].accountID;
+  const fromAcct = req.body.option1.split(' - ')[1]; // req.body.accounts[0].accountID;
   const toAcct = req.body.toAcc; // req.body.accounts[1].accountID;
-  const toID = req.body.toID;
+  const { toID } = req.body;
   const date = new Date()
     .toISOString()
     .slice(0, 19)
-    .replace("T", " ");
-  // subtract amount
-  const sql = `UPDATE Accounts SET accBalance = accBalance - ${withdrawAmt} WHERE Accounts.uID = ${uID} AND Accounts.accountID = ${fromAcct}`;
+    .replace('T', ' ');
+  // check that toID is in db
+  const sql = `SELECT * FROM Accounts WHERE uID = ${toID}`;
   db.query(sql, (err, result) => {
-    if (err) throw err;
-    // create transaction
-    const sqlt = `INSERT INTO Transactions (uID, originAccountID, receiverAccountID, transactionDate, payment, type) VALUES ('${uID}', '${fromAcct}', '${toAcct}', '${date}', ${withdrawAmt}, 'withdraw');`;
-    db.query(sqlt, (err, result) => {
-      if (err) throw err;
-      // add amount to toAcct of toID
-      const sql1 = `UPDATE Accounts SET accBalance = accBalance + ${withdrawAmt} WHERE Accounts.uID = ${toID} AND Accounts.accountID = ${toAcct}`;
-      db.query(sql1, (err, result) => {
+    if (result.length !== 0) {
+      // subtract amount
+      const sql = `UPDATE Accounts SET accBalance = accBalance - ${withdrawAmt} WHERE Accounts.uID = ${uID} AND Accounts.accountID = ${fromAcct}`;
+      db.query(sql, (err, result) => {
         if (err) throw err;
-        const sqlt1 = `INSERT INTO Transactions(uID, receiverAccountID, originAccountID, transactionDate, payment,type) VALUES ('${toID}', '${fromAcct}', '${toAcct}', '${date}', ${withdrawAmt}, 'deposit');`;
-        db.query(sqlt1, (err, result) => {
+        // create transaction
+        const sqlt = `INSERT INTO Transactions (uID, originAccountID, receiverAccountID, transactionDate, payment, type) VALUES ('${uID}', '${fromAcct}', '${toAcct}', '${date}', ${withdrawAmt}, 'withdraw');`;
+        db.query(sqlt, (err, result) => {
           if (err) throw err;
-          res.send({
-            Success: true
+          // add amount to toAcct of toID
+          const sql1 = `UPDATE Accounts SET accBalance = accBalance + ${withdrawAmt} WHERE Accounts.uID = ${toID} AND Accounts.accountID = ${toAcct}`;
+          db.query(sql1, (err, result) => {
+            if (err) throw err;
+            const sqlt1 = `INSERT INTO Transactions(uID, receiverAccountID, originAccountID, transactionDate, payment,type) VALUES ('${toID}', '${fromAcct}', '${toAcct}', '${date}', ${withdrawAmt}, 'deposit');`;
+            db.query(sqlt1, (err, result) => {
+              if (err) throw err;
+              res.send({
+                Success: true
+              });
+            });
           });
         });
       });
-    });
+    }
   });
 });
 
