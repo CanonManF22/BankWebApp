@@ -27,7 +27,15 @@ class TransferPage extends React.Component {
           size="lg"
           block
         >
-          Transfers Between Chase Banks
+          Transfers Between Internal Chase Banks
+        </Button>
+        <Button
+          onClick={this.routeChangeUserTrans}
+          variant="primary"
+          size="lg"
+          block
+        >
+          Transfers Between Other Chase Banks
         </Button>
         <Button
           onClick={this.routeChangeOtherTrans}
@@ -47,6 +55,20 @@ class TransferPage extends React.Component {
     } else {
       this.props.history.push({
         pathname: "/transferChase",
+        state: {
+          uID: this.props.location.state.uID,
+          isManager: this.props.location.state.isManager
+        }
+      });
+    }
+  };
+
+  routeChangeUserTrans = () => {
+    if (this.props.location.state === undefined) {
+      window.alert("Error, not logged in!");
+    } else {
+      this.props.history.push({
+        pathname: "/transferUser",
         state: {
           uID: this.props.location.state.uID,
           isManager: this.props.location.state.isManager
