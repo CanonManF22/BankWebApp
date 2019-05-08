@@ -27,7 +27,7 @@ class TransferPage extends React.Component {
           size="lg"
           block
         >
-          Transfers Between Internal Chase Banks
+          Transfers Between Your Bank Accounts
         </Button>
         <Button
           onClick={this.routeChangeUserTrans}
@@ -35,7 +35,7 @@ class TransferPage extends React.Component {
           size="lg"
           block
         >
-          Transfers Between Other Chase Banks
+          Transfers Between Other Chase Bank Accounts
         </Button>
         <Button
           onClick={this.routeChangeOtherTrans}

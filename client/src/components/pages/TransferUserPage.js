@@ -188,7 +188,7 @@ class TransferUserPage extends React.Component {
           <Form.Control
             id="toID"
             name="toID"
-            placeholder="987654321"
+            placeholder="10"
             type="number"
             onChange={this.handleChange3}
           />
