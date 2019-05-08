@@ -47,7 +47,7 @@ class DepositCheckPage extends React.Component {
       res
         ? this.setState({
             accounts: res,
-            option1: this.state.accounts[0].accountID 
+            option1: this.state.accounts[0].accountID
           })
         : this.setState({ accounts: res, option1: null })
     );
@@ -99,9 +99,11 @@ class DepositCheckPage extends React.Component {
     const uID = this.props.location.state.uID;
     if (this.state.depositAmt <= 0)
       window.alert("Error: Invalid deposit amount.");
-    else {
+    else if (this.state.depositAmt > 999999999) {
+      window.alert("Error: Max deposit amount allowed is: $999999999");
+    } else {
       console.log("make request");
-      console.log('reqqq', this.state)
+      console.log("reqqq", this.state);
       const response = await fetch(
         `http://localhost:8080/accounts/${uID}/deposit`,
         {

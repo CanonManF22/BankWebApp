@@ -91,7 +91,7 @@ class RegistrationPage extends React.Component {
           </Form.Field>
           <Form.Field>
             <label htmlFor="password" style={{ color: "#000000" }}>
-              Enter a Password
+              Enter a Password (6 character minimum)
             </label>
             <input
               type="password"

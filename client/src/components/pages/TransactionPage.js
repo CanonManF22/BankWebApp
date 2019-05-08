@@ -144,6 +144,8 @@ class TransactionPage extends React.Component {
       tempBal = parseFloat(tempBal) - parseFloat(filteredTrans[i].payment);
     }
 
+    console.log(filteredTrans);
+
     this.setState({ transactions: filteredTrans });
   };
 
