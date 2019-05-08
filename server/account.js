@@ -191,6 +191,8 @@ router.post('/:user_id/transferInternal', (req, res) => {
   const withdrawAmt = req.body.transferamt;
   const fromAcct = req.body.option1.split(' - ')[1]; // req.body.accounts[0].accountID;
   const toAcct = req.body.option2.split(' - ')[1]; // req.body.accounts[1].accountID;
+  // TODO: get toID
+  // const toID =
   const date = new Date()
     .toISOString()
     .slice(0, 19)
