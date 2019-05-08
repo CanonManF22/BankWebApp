@@ -15,7 +15,8 @@ class TransferUserPage extends React.Component {
     this.state = {
       uID: null,
       option1: null,
-      destAcc: null,
+      toAcc: null,
+      toID: null,
       transferamt: 0
     };
   }
@@ -35,9 +36,15 @@ class TransferUserPage extends React.Component {
               parseFloat(
                 Math.round(this.state.accounts[0].accBalance * 100) / 100
               ).toFixed(2),
-            destAcc: null
+            toAcc: null,
+            toID: null
           })
-        : this.setState({ accounts: res, option1: null, destAcc: null })
+        : this.setState({
+            accounts: res,
+            option1: null,
+            toAcc: null,
+            toID: null
+          })
     );
   }
 
@@ -80,10 +87,17 @@ class TransferUserPage extends React.Component {
     });
   };
 
-  //second dropdown
+  //second
   handleChange2 = e => {
     this.setState({
-      destAcc: parseFloat(e.target.value)
+      toAcc: parseFloat(e.target.value)
+    });
+  };
+
+  //third
+  handleChange3 = e => {
+    this.setState({
+      toID: parseFloat(e.target.value)
     });
   };
 
@@ -104,7 +118,7 @@ class TransferUserPage extends React.Component {
         window.alert("Error: Not Enough Funds");
       else {
         const response = await fetch(
-          `http://localhost:8080/accounts/${uID}/transfer`,
+          `http://localhost:8080/accounts/${uID}/transferInternal`,
           {
             mode: "cors",
             method: "POST",
@@ -161,11 +175,22 @@ class TransferUserPage extends React.Component {
             Transfer To (Bank Account #)
           </Form.Label>
           <Form.Control
-            id="destAcc"
-            name="destAcc"
+            id="toAcc"
+            name="toAcc"
             placeholder="987654321"
             type="number"
             onChange={this.handleChange2}
+          />
+          <br />
+          <Form.Label style={{ fontSize: "150%" }}>
+            User Account # for Above Bank Account
+          </Form.Label>
+          <Form.Control
+            id="toID"
+            name="toID"
+            placeholder="987654321"
+            type="number"
+            onChange={this.handleChange3}
           />
           <br />
           <Form.Label style={{ fontSize: "150%" }}>Amount ($USD)</Form.Label>
