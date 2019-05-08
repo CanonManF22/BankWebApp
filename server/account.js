@@ -6,6 +6,21 @@ const db = require('./db');
 // TODO:
 // get all accounts of a user
 router.get('/:user_id', (req, res) => {
+  console.log(req.params);
+  const { user_id } = req.params;
+  console.log(user_id);
+
+  const sql = `SELECT * FROM Accounts WHERE uID = ${user_id}`;
+  console.log(sql);
+  db.query(sql, (err, result) => {
+    if (err) throw err;
+    console.log(result);
+    res.send(result);
+  });
+});
+
+// generate manager reports by filter
+router.get('/reports', (req, res) => {
   const parameters = JSON.stringify(req.filters).replace(':', '=');
   console.log(req.params);
   const { user_id } = req.params;
@@ -13,7 +28,6 @@ router.get('/:user_id', (req, res) => {
 
   // query with options
   const sql = `SELECT * FROM Accounts WHERE ${parameters}`;
-  // const sql = `SELECT * FROM Accounts WHERE uID = ${user_id}`;
   console.log(sql);
   db.query(sql, (err, result) => {
     if (err) throw err;
