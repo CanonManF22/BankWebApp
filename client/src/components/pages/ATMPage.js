@@ -118,9 +118,23 @@ export class MapContainer extends React.Component {
   createMarker = place => {
     const { google } = this.props;
 
-    const infowindow = new google.maps.InfoWindow({
-      content: place.name + " " + place.vicinity
-    });
+    let infowindow = null;
+
+    Geocode.fromLatLng(
+      place.geometry.location.lat(),
+      place.geometry.location.lng()
+    ).then(
+      response => {
+        const address = response.results[0].formatted_address;
+        infowindow = new google.maps.InfoWindow({
+          content: place.name + " " + address
+        });
+        console.log(address);
+      },
+      error => {
+        console.error(error);
+      }
+    );
 
     const marker = new google.maps.Marker({
       map: this.map,
