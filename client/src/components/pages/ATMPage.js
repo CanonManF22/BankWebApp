@@ -2,7 +2,7 @@ import React from "react";
 import Geocode from "react-geocode";
 import ReactDOM from "react-dom";
 import { Form, Button } from "react-bootstrap";
-import { GoogleApiWrapper } from "google-maps-react";
+import { GoogleApiWrapper, InfoWindow } from "google-maps-react";
 
 const divStyle = {
   position: "relative",
@@ -117,9 +117,18 @@ export class MapContainer extends React.Component {
   //creates markers on the map
   createMarker = place => {
     const { google } = this.props;
-    new google.maps.Marker({
+
+    const infowindow = new google.maps.InfoWindow({
+      content: place.name + " " + place.vicinity
+    });
+
+    const marker = new google.maps.Marker({
       map: this.map,
       position: place.geometry.location
+    });
+
+    marker.addListener("click", function() {
+      infowindow.open(this.map, marker);
     });
 
     /* clicking doesnt work atm
@@ -223,6 +232,7 @@ export class MapContainer extends React.Component {
           zoom={14}
           style={{ width: "100%", height: "85%" }}
         >
+          <InfoWindow ref={"infowindow"} />
           {/*<InfoWindow ref={"infowindow"} onClose={this.onInfoWindowClose} >*/}
         </div>
       </div>
