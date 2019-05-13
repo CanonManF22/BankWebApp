@@ -85,7 +85,10 @@ class BillPage extends React.Component {
         "Content-Type": "application/json"
       }
     }).then(res => res.json());
-    this.setState({ accounts: response, uID: this.props.location.state.uID });
+    this.setState({
+      accounts: response,
+      uID: this.props.location.state.uID
+    });
     if (response.length < 1) {
       window.alert("No accounts for this user");
     } else {
@@ -133,12 +136,36 @@ class BillPage extends React.Component {
   };
 
   //api call
-  handleSubmit = () => {
+  handleSubmit = async e => {
     //schedule a date for bill payment in backend
     //this.state.uID
     //this.state.option1 for chosen account in 'Saving - 010101010 - $101.10' format.  Split between ' - ' and remove $ if needed
-    //this.state.date is formatted as "YYYY-MM-DD", zero padded
+    //this.state.date is formatted as "YYYY-MM-DD", zero padded\
     console.log(this.state);
+    const { data } = this.state;
+    const response = await fetch("http://localhost:8080/bills/create", {
+      mode: "cors",
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({ post: data })
+    }).then(res => res.json());
+    if (response.Success) {
+      window.alert("Successfully added bill!");
+      this.routeToLogin();
+    } else {
+      window.alert("Error adding bill.");
+    }
+    /*
+    const { user_id } = req.uID;
+    const { accType } = accType;
+    const { accountID } = req.options2;
+    const { toAcct } = req.options1;
+    const { amt } = req.payamt;
+    const { date } = req;
+    const { days } = req;
+    */
   };
 
   render() {
