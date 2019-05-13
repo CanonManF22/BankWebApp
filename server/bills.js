@@ -17,11 +17,9 @@ router.get('/:user_id', (req, res) => {
 
 router.post('/create', (req, res) => {
   const { user_id } = req.uID;
-  const { accType } = accType;
-  const { accountID } = req.options2;
-  const { toAcct } = req.options1;
+  const { fromAcct } = req.fromAcct;
   const { amt } = req.payamt;
-  const { date } = req;
+  const { creationDate } = req.creationDate;
   const { days } = req;
 
   const sql = `INSERT INTO Bills (uID, accountID, billBalance, creationDate, days) VALUES (${user_id}, ${fromAcct}, ${amt}, ${creationDate}, ${days});`;
