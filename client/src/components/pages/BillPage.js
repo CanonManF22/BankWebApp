@@ -153,7 +153,7 @@ class BillPage extends React.Component {
     }).then(res => res.json());
     if (response.Success) {
       window.alert("Successfully added bill!");
-      this.routeToLogin();
+      this.routeToAccount();
     } else {
       window.alert("Error adding bill.");
     }
@@ -166,6 +166,16 @@ class BillPage extends React.Component {
     const { date } = req;
     const { days } = req;
     */
+  };
+
+  routeToAccount = () => {
+    this.props.history.push({
+      pathname: "/accounts",
+      state: {
+        uID: this.props.location.state.uID,
+        isManager: this.props.location.state.isManager
+      }
+    });
   };
 
   render() {
