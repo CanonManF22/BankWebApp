@@ -149,7 +149,7 @@ class BillPage extends React.Component {
       headers: {
         "Content-Type": "application/json"
       },
-      body: JSON.stringify({ post: data })
+      body: JSON.stringify(this.state)
     }).then(res => res.json());
     if (response.Success) {
       window.alert("Successfully added bill!");
